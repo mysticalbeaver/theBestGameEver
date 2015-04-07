@@ -1,0 +1,152 @@
+<?xml version = "1.0"?>
+<GameData>
+<!-- screenTitle is also used to identify you and your animation. 
+     So make sure to include your name as part of the screenTitle -->
+<screenTitle>The Incredibly Dangerous Articuno Swarm</screenTitle>
+<maxStringSize>50</maxStringSize>
+<numberofswirls>60</numberofswirls>
+<numberofarticunos>20</numberofarticunos>
+
+<frameCap>60</frameCap>
+<!-- use 1 or 0 to toggle framerate cap -->
+<framesAreCapped>1</framesAreCapped>
+
+<frameMax>200</frameMax>
+<username>bburkho</username>
+
+<view>
+  <width>500</width>
+  <height>588</height>
+</view>
+
+<world>
+  <width>3000</width>
+  <height>588</height>
+</world>
+<clock>
+  <fpsLoc x="10" y="10"/>
+  <secondsLoc x="10" y="30"/>
+</clock>
+
+<middle>
+  <file>images/clouds.png</file>
+  <red>193</red>
+  <green>205</green>
+  <blue>205</blue>
+  <factor>2</factor>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>1038</width>
+  <height>588</height>
+  <transparency>false</transparency>
+</middle>
+
+<back>
+  <file>images/city.png</file>
+  <red>193</red>
+  <green>205</green>
+  <blue>205</blue>
+  <factor>3</factor>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>1181</width>
+  <height>588</height>
+  <transparency>false</transparency>
+</back>
+
+<front>
+  <file>images/industrial.png</file>
+  <red>193</red>
+  <green>205</green>
+  <blue>205</blue>
+  <factor>1</factor>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>688</width>
+  <height>588</height>
+  <transparency>true</transparency>
+</front>
+
+<font name="font">
+  <file>font/dyslexic-bold.otf</file>
+  <size>16</size>
+  <red>0</red>
+  <green>0</green>
+  <blue>0</blue>
+  <unused>0</unused>
+</font>
+
+<mew>
+  <file>images/mew2.png</file>
+  <startLoc x="120" y="140"/>
+
+  <frames>12</frames>
+  <frameInterval>60</frameInterval>
+
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>100</width>
+  <height>100</height>
+  <speedX>-500</speedX>
+  <speedY>500</speedY>
+  <transparency>true</transparency>
+</mew>
+
+<mewtwo>
+  <file>images/mewtwo.png</file>
+  <startLoc x="190" y="100"/>
+
+  <frames>2</frames>
+  <frameInterval>60</frameInterval>
+
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>105</width>
+  <height>124</height>
+  <speedX>-800</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</mewtwo>
+
+<cloudgun>
+  <file>images/nimbusgun.png</file>
+  <startLoc x="0" y="100"/>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>100</width>
+  <height>100</height>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</Articuno>
+
+
+<Articuno>
+  <file>images/Articuno.png</file>
+  <startLoc x="190" y="100"/>
+
+  <frames>40</frames>
+  <frameInterval>20</frameInterval>
+
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>172</width>
+  <height>171</height>
+  <speedX>-400</speedX>
+  <speedY>400</speedY>
+  <transparency>true</transparency>
+</Articuno>
+
+<swirl>
+  <file>images/swirl.png</file>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>19</width>
+  <height>18</height>
+  <startLoc x="320" y="240"/>
+  <speedX>175</speedX>
+  <speedY>175</speedY>
+  <transparency>true</transparency>
+</swirl>
+
+</GameData>
