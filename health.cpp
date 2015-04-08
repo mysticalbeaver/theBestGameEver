@@ -66,10 +66,6 @@ void Health::update(Uint32 ticks) {
 }
 
 void Health::powerUp() {
-  deltaTime += ticks;
-  if ( currentLength > 0 && deltaTime > interval ) {
-    deltaTime = 0;
-    currentLength -= increments;
-  }
+
 }
 
