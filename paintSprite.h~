@@ -1,14 +1,15 @@
-#ifndef MULTISPRITE__H
-#define MULTISPRITE__H
+#ifndef PAINTSPRITE__H
+#define PAINTSPRITE__H
 #include <string>
 #include <vector>
 #include "drawable.h"
 
-class MultiSprite : public Drawable {
+class paintSprite : public Drawable {
 public:
-  MultiSprite(const std::string&);
-  MultiSprite(const MultiSprite&);
-  virtual ~MultiSprite() { } 
+  paintSprite(const std::string&);
+  paintSprite(const paintSprite&);
+  double getScale() { return scale; }
+  virtual ~paintSprite() { } 
 
   virtual void draw() const;
   virtual void update(Uint32 ticks);
@@ -22,6 +23,7 @@ protected:
   const std::vector<Frame *> frames;
   int worldWidth;
   int worldHeight;
+  double scale;
 
   unsigned currentFrame;
   unsigned numberOfFrames;

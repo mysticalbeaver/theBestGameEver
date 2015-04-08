@@ -4,6 +4,7 @@
 #include "twowaymultisprite.h"
 #include "playersprite.h"
 #include "multisprite.h"
+#include "paintSprite.h"
 #include "aaline.h"
 #include "sprite.h"
 #include "gamedata.h"
@@ -12,6 +13,10 @@
 Manager::~Manager() { 
   for (unsigned i = 0; i < sprites.size(); ++i) {
     delete sprites[i];
+  }
+ 
+  for (unsigned i = 0; i < depthMakers.size(); ++i) {
+    delete depthMakers[i];
   }
 }
 Manager::Manager() :
@@ -24,6 +29,7 @@ Manager::Manager() :
   front("front", Gamedata::getInstance().getXmlInt("front/factor") ),
   viewport( Viewport::getInstance() ),
   sprites(),
+  depthMakers(),
   currentSprite(0),
 
   makeVideo( false ),
@@ -43,12 +49,13 @@ Manager::Manager() :
   
   sprites.push_back( new PlayerSprite("cloudgun") );
   sprites.push_back( new TwoWayMultiSprite("mewtwo") );
-  
-  for (unsigned int i = 0; i < n; ++i){
-  	sprites.push_back(new MultiSprite("Articuno"));
-  	}
+
   for (unsigned int i = 0; i < j; ++i){
   	sprites.push_back(new Sprite("swirl"));
+  	}
+  
+  for (unsigned int i = 0; i < n; ++i){
+  	depthMakers.push_back(new paintSprite("Articuno"));
   	}	
   
   viewport.setObjectToTrack(sprites[0]);
@@ -63,6 +70,10 @@ void Manager::draw() const {
   //the articunos and swirls
   for (int i = sprites.size() - 1; i >= 0; --i) {
     sprites[i]->draw();
+  }
+
+  for (unsigned i = 0; i < depthMakers.size(); ++i) {
+    depthMakers[i]->draw();
   }
 
   //io.printMessageAt("Press T to switch sprites", 10, 70);
@@ -126,6 +137,9 @@ void Manager::update() {
   Uint32 ticks = clock.getTicksSinceLastFrame();
   for (int i = sprites.size()-1; i >= 0; --i) {
     sprites[i]->update(ticks);
+  }
+  for (unsigned i = 0; i < depthMakers.size(); ++i) {
+    depthMakers[i]->update(ticks);
   }
   if ( makeVideo && frameCount < frameMax ) {
     makeFrame();
@@ -205,6 +219,6 @@ void Manager::play() {
 	 SDL_Flip(screen);
 
     update();
-    
+
   }
 }

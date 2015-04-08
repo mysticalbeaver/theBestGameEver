@@ -30,7 +30,7 @@ Frame::Frame( SDL_Surface* spr, Uint16 w, Uint16 h,
   sourceX(src_x), sourceY(src_y) {
 }
 
-Frame::Frame( const Frame& frame ) :
+Frame::Frame( Frame& frame ) :
   screen(frame.screen),
   surface(frame.surface), 
   width(frame.width), 
@@ -40,7 +40,7 @@ Frame::Frame( const Frame& frame ) :
   { }
 
 
-Frame& Frame::operator=(const Frame& rhs) {
+Frame& Frame::operator=(Frame& rhs) {
   surface = rhs.surface;
   screen = rhs.screen;
   width = rhs.width;

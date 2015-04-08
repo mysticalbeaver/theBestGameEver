@@ -6,6 +6,7 @@
 <maxStringSize>50</maxStringSize>
 <numberofswirls>60</numberofswirls>
 <numberofarticunos>20</numberofarticunos>
+<startscale>1</startscale>
 
 <hudStartX>280</hudStartX>
 <hudStartY>60</hudStartY>

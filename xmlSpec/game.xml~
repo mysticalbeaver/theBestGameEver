@@ -6,6 +6,7 @@
 <maxStringSize>50</maxStringSize>
 <numberofswirls>60</numberofswirls>
 <numberofarticunos>20</numberofarticunos>
+<startscale>1</startscale>
 
 <hudStartX>280</hudStartX>
 <hudStartY>60</hudStartY>
@@ -38,6 +39,9 @@
 
 <fpsLocX>282</fpsLocX>
 <fpsLocY>83</fpsLocY>
+
+<getSecondsLocX>282</getSecondsLocX>
+<getSecondsLocY>103</getSecondsLocY>
 
 <frameCap>60</frameCap>
 <!-- use 1 or 0 to toggle framerate cap -->

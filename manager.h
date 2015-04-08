@@ -6,6 +6,7 @@
 #include "health.h"
 #include "viewport.h"
 #include <cmath>  // for sqrtf
+#include "paintSprite.h"
 
 class Manager {
 public:
@@ -27,6 +28,7 @@ private:
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;
+  std::vector<paintSprite*> depthMakers;
   int currentSprite;
 
   bool makeVideo;
