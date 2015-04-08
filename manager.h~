@@ -11,6 +11,7 @@ public:
   ~Manager ();
   void play();
   void switchSprite();
+  void drawHUD(SDL_Surface* screen, int x, int y);
 
 private:
   const bool env;
@@ -24,6 +25,7 @@ private:
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;
+  std::vector<paintSprite*> depthMakers;
   int currentSprite;
 
   bool makeVideo;

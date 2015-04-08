@@ -4,6 +4,7 @@
 #include "clock.h"
 #include "world.h"
 #include "viewport.h"
+#include "paintSprite.h"
 
 class Manager {
 public:
@@ -25,6 +26,7 @@ private:
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;
+  std::vector<paintSprite*> depthMakers;
   int currentSprite;
 
   bool makeVideo;

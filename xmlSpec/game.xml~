@@ -6,6 +6,7 @@
 <maxStringSize>50</maxStringSize>
 <numberofswirls>60</numberofswirls>
 <numberofarticunos>20</numberofarticunos>
+<startscale>1</startscale>
 
 <frameCap>60</frameCap>
 <!-- use 1 or 0 to toggle framerate cap -->
@@ -118,7 +119,7 @@
   <speedX>0</speedX>
   <speedY>0</speedY>
   <transparency>true</transparency>
-</Articuno>
+</cloudgun>
 
 
 <Articuno>
