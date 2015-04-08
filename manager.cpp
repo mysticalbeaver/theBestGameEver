@@ -209,20 +209,15 @@ Uint8 *keystate = SDL_GetKeyState(NULL);
       }
     }
 
-    draw();
-    
+    draw(); 
 	 if(counter < 200) {
 	 	drawHUD(screen, startX, startY);
 	 }
 	 counter++;
-
-	// **************** Draw Health Meter ********************
-     bar.draw();
-	  bar.update(clock.getTicksSinceLastFrame());
-
+    bar.draw(); 
 	 SDL_Flip(screen);
-
     update();
+	 bar.update(clock.getTicksSinceLastFrame());
 
   }
 }
