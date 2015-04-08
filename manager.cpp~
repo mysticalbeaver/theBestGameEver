@@ -126,7 +126,12 @@ void Manager::drawHUD(SDL_Surface* screen, int x, int y) {
   io.printMessageAt(Gamedata::getInstance().getXmlStr("hudMoveDownMsg/text"), 
 						  Gamedata::getInstance().getXmlInt("hudMoveDownMsg/xLoc"), 
 						  Gamedata::getInstance().getXmlInt("hudMoveDownMsg/yLoc"));
-
+  io.printMessageAt(Gamedata::getInstance().getXmlStr("hudPowerBarMsg/text"), 
+						  Gamedata::getInstance().getXmlInt("hudPowerBarMsg/xLoc"), 
+						  Gamedata::getInstance().getXmlInt("hudPowerBarMsg/yLoc"));
+  io.printMessageAt(Gamedata::getInstance().getXmlStr("hudPowerBarMsg/text2"), 
+						  Gamedata::getInstance().getXmlInt("hudPowerBarMsg/xLoc2"), 
+						  Gamedata::getInstance().getXmlInt("hudPowerBarMsg/yLoc2"));
 
   // also need to add :
   // health monitor  
@@ -164,8 +169,9 @@ void Manager::play() {
   Health bar;
 
   while ( not done ) {
+Uint8 *keystate = SDL_GetKeyState(NULL);
     while ( SDL_PollEvent(&event) ) {
-      Uint8 *keystate = SDL_GetKeyState(NULL);
+      
       if (event.type ==  SDL_QUIT) { done = true; break; }
       if(event.type == SDL_KEYDOWN) {
         if (keystate[SDLK_ESCAPE] || keystate[SDLK_q]) {
@@ -196,18 +202,13 @@ void Manager::play() {
           counter = 0;
         }
 	     if (keystate[SDLK_SPACE]) {
-           bar.reset();
+           bar.powerUp();
         }
       } else if( event.type == SDL_KEYUP ) {
 		    sprites[0]->stopMove();
       }
     }
-<<<<<<< HEAD
 
-=======
-    //int startX = 40;
-    //int startY = -40;
->>>>>>> 3364af9961bb977c5000a678e93d3ea41680ba18
     draw();
     
 	 if(counter < 200) {
@@ -217,17 +218,11 @@ void Manager::play() {
 
 	// **************** Draw Health Meter ********************
      bar.draw();
-     io.printMessageCenteredAt("Press f1 to reset health meter", 10);;
-     bar.update(clock.getTicksSinceLastFrame());
-
+	  bar.update(clock.getTicksSinceLastFrame());
 
 	 SDL_Flip(screen);
 
     update();
-<<<<<<< HEAD
-    
-=======
-    //drawHUD(creen, startX, startY);
->>>>>>> 3364af9961bb977c5000a678e93d3ea41680ba18
+
   }
 }

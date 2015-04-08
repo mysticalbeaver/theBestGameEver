@@ -2,12 +2,12 @@
 
 Health::Health() :
   screen(IOManager::getInstance().getScreen()),
-  start(Vector2f(20, 100)), 
+  start(Vector2f(20, 20)), 
   totalLength(200), 
   currentLength(200), 
   thick(14), 
-  increments(20),
-  interval(1000),
+  increments(1),
+  interval(50),
   deltaTime(0),
   RED( SDL_MapRGB(screen->format, 0xff, 0x00, 0x00) ),
   GRAY( SDL_MapRGB(screen->format, 0xce, 0xb4, 0xb4) ),
@@ -59,13 +59,20 @@ void Health::draw() const {
 }
 void Health::update(Uint32 ticks) {
   deltaTime += ticks;
-  if ( currentLength > 0 && deltaTime > interval ) {
+  /* previously, decremented on its own
+   if ( currentLength > 0 && deltaTime > interval ) {
     deltaTime = 0;
     currentLength -= increments;
-  }
+  }*/
+
+	if(currentLength == totalLength) {
+		currentLength = 0;
+	}
 }
 
 void Health::powerUp() {
-
+  if( currentLength != totalLength) {
+  		currentLength+= 10;
+  }
 }
 

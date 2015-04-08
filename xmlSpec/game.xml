@@ -11,7 +11,7 @@
 <hudStartX>280</hudStartX>
 <hudStartY>60</hudStartY>
 <hudWidth>200</hudWidth>
-<hudHeight>120</hudHeight>
+<hudHeight>160</hudHeight>
 
 <hudWelcomeMsg>
 	<text>Welcome!</text>
@@ -36,6 +36,15 @@
 	<xLoc>295</xLoc>
 	<yLoc>163</yLoc>
 </hudMoveDownMsg>
+
+<hudPowerBarMsg>
+	<text>Press space bar to </text>
+	<text2>increase power</text2>
+	<xLoc>282</xLoc>
+	<yLoc>183</yLoc>
+	<xLoc2>282</xLoc2>
+	<yLoc2>203</yLoc2>
+</hudPowerBarMsg>
 
 <fpsLocX>282</fpsLocX>
 <fpsLocY>83</fpsLocY>
