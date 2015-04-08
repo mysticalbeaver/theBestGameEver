@@ -50,9 +50,7 @@ void Clock::draw() const {
   IOManager::getInstance().printMessageValueAt("fps: ", frames, 
 																Gamedata::getInstance().getXmlInt("fpsLocX"), 
 																Gamedata::getInstance().getXmlInt("fpsLocY"));
-  IOManager::getInstance().printMessageValueAt("Seconds Elapsed: ", getSeconds(), 
-																Gamedata::getInstance().getXmlInt("getSecondsLocX"),
-																Gamedata::getInstance().getXmlInt("getSecondsLocY"));
+  IOManager::getInstance().printMessageValueAt("Seconds Elapsed: ", getSeconds(), 282, 103);
 }
 
 void Clock::update() {

@@ -3,7 +3,9 @@
 #include "ioManager.h"
 #include "clock.h"
 #include "world.h"
+#include "health.h"
 #include "viewport.h"
+#include <cmath>  // for sqrtf
 
 class Manager {
 public:

@@ -9,9 +9,6 @@
 #include "gamedata.h"
 #include "manager.h"
 
-const int HUD_WIDTH = 200;
-const int HUD_HEIGHT = 100;
-
 Manager::~Manager() { 
   for (unsigned i = 0; i < sprites.size(); ++i) {
     delete sprites[i];
@@ -61,7 +58,7 @@ void Manager::draw() const {
   back.draw();
   middle.draw();
   front.draw();
-  clock.draw();
+	
   //draw the sprites in reverse so mew and mewtwo are on top of all
   //the articunos and swirls
   for (int i = sprites.size() - 1; i >= 0; --i) {
@@ -72,7 +69,7 @@ void Manager::draw() const {
   io.printMessageAt(title, 10, 550);
   viewport.draw();
 
-  SDL_Flip(screen);
+	// removed SDL_flip from here and put in game loop
 }
 
 void Manager::makeFrame() {
@@ -93,11 +90,35 @@ void Manager::switchSprite() {
 }
 
 void Manager::drawHUD(SDL_Surface* screen, int x, int y) {
-  const Uint32 RED = SDL_MapRGB(screen->format, 0xff, 0, 0);
-  Draw_AALine(screen, x, y+HUD_HEIGHT/2, 
-                      x+HUD_WIDTH,y+HUD_HEIGHT/2, 
-                      HUD_HEIGHT, 0xff, 0xff, 0xff, 0xff/2);
-  Draw_AALine(screen, x,y, x+HUD_WIDTH,y, RED);
+  int hudHeight = Gamedata::getInstance().getXmlInt("hudHeight");
+  int hudWidth = Gamedata::getInstance().getXmlInt("hudWidth");
+
+  const Uint32 BLUE = SDL_MapRGB(screen->format, 0, 0, 0xff);
+  Draw_AALine(screen, x, y+hudHeight/2, 
+                      x+hudWidth,y+hudHeight/2, 
+                      hudHeight, 0xff, 0xff, 0xff, 0xff/2);
+  Draw_AALine(screen, x,y, x+hudWidth,y, BLUE);
+  Draw_AALine(screen, x,y+hudHeight, x+hudWidth,y+hudHeight, BLUE);
+  io.printMessageAt(Gamedata::getInstance().getXmlStr("hudWelcomeMsg/text"), 
+						  Gamedata::getInstance().getXmlInt("hudWelcomeMsg/xLoc"), 
+						  Gamedata::getInstance().getXmlInt("hudWelcomeMsg/yLoc"));
+  
+  // will print the fps at 22, 83 and the elapsed seconds at 22, 103
+  clock.draw();
+ 
+  io.printMessageAt(Gamedata::getInstance().getXmlStr("hudMoveCannonMsg/text"), 
+						  Gamedata::getInstance().getXmlInt("hudMoveCannonMsg/xLoc"), 
+						  Gamedata::getInstance().getXmlInt("hudMoveCannonMsg/yLoc"));
+  io.printMessageAt(Gamedata::getInstance().getXmlStr("hudMoveUpMsg/text"), 
+						  Gamedata::getInstance().getXmlInt("hudMoveUpMsg/xLoc"), 
+						  Gamedata::getInstance().getXmlInt("hudMoveUpMsg/yLoc"));
+  io.printMessageAt(Gamedata::getInstance().getXmlStr("hudMoveDownMsg/text"), 
+						  Gamedata::getInstance().getXmlInt("hudMoveDownMsg/xLoc"), 
+						  Gamedata::getInstance().getXmlInt("hudMoveDownMsg/yLoc"));
+
+
+  // also need to add :
+  // health monitor  
 }
 
 void Manager::update() {
@@ -122,6 +143,11 @@ void Manager::play() {
 
   //IOManager& zo = IOManager::getInstance();
   //SDL_Surface * const creen = zo.getScreen();
+  int counter = 0;
+  int startX = Gamedata::getInstance().getXmlInt("hudStartX");
+  int startY = Gamedata::getInstance().getXmlInt("hudStartY");
+
+  Health bar;
 
   while ( not done ) {
     while ( SDL_PollEvent(&event) ) {
@@ -136,31 +162,49 @@ void Manager::play() {
           switchSprite();
         }
         if ( keystate[SDLK_p] ) {
-          if ( clock.isPaused() ) clock.unpause();
+          if ( clock.isPaused() ) clock.unpause(); 
           else clock.pause();
         }
-        if (keystate[SDLK_F3]) {
+        if ( keystate[SDLK_F3] ) {
           clock.toggleSloMo();
         }
-
-	if(keystate[SDLK_w])
-	  sprites[0]->up();
-	if(keystate[SDLK_s]) 
-	  sprites[0]->down();
-
-
-        if (keystate[SDLK_F4] && !makeVideo) {
+		  if( keystate[SDLK_w] ) {
+		  	 sprites[0]->up();
+		  }
+		  if ( keystate[SDLK_s] ) {
+		 	 sprites[0]->down();
+		  }
+        if ( keystate[SDLK_F4] && !makeVideo ) {
           std::cout << "Making video frames" << std::endl;
           makeVideo = true;
         }
+		  if ( keystate[SDLK_F1] ) {
+          counter = 0;
+        }
+	     if (keystate[SDLK_SPACE]) {
+           bar.reset();
+        }
+      } else if( event.type == SDL_KEYUP ) {
+		    sprites[0]->stopMove();
       }
-     else if(event.type == SDL_KEYUP)
-	sprites[0]->stopMove();
     }
-    int startX = 40;
-    int startY = -40;
+
     draw();
+    
+	 if(counter < 200) {
+	 	drawHUD(screen, startX, startY);
+	 }
+	 counter++;
+
+	// **************** Draw Health Meter ********************
+     bar.draw();
+     io.printMessageCenteredAt("Press f1 to reset health meter", 10);;
+     bar.update(clock.getTicksSinceLastFrame());
+
+
+	 SDL_Flip(screen);
+
     update();
-    drawHUD(creen, startX, startY);
+    
   }
 }

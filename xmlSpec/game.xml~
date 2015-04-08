@@ -7,11 +7,43 @@
 <numberofswirls>60</numberofswirls>
 <numberofarticunos>20</numberofarticunos>
 
+<hudStartX>280</hudStartX>
+<hudStartY>60</hudStartY>
+<hudWidth>200</hudWidth>
+<hudHeight>120</hudHeight>
+
+<hudWelcomeMsg>
+	<text>Welcome!</text>
+	<xLoc>282</xLoc>
+	<yLoc>63</yLoc>
+</hudWelcomeMsg>
+
+<hudMoveCannonMsg>
+	<text>To move cannon:</text>
+	<xLoc>282</xLoc>
+	<yLoc>123</yLoc>
+</hudMoveCannonMsg>
+
+<hudMoveUpMsg>
+	<text>use W to move up</text>
+	<xLoc>295</xLoc>
+	<yLoc>143</yLoc>
+</hudMoveUpMsg>
+
+<hudMoveDownMsg>
+	<text>use S to move down</text>
+	<xLoc>295</xLoc>
+	<yLoc>163</yLoc>
+</hudMoveDownMsg>
+
+<fpsLocX>282</fpsLocX>
+<fpsLocY>83</fpsLocY>
+
 <frameCap>60</frameCap>
 <!-- use 1 or 0 to toggle framerate cap -->
 <framesAreCapped>1</framesAreCapped>
 
-<frameMax>200</frameMax>
+<frameMax>400</frameMax>
 <username>bburkho</username>
 
 <view>
@@ -118,7 +150,7 @@
   <speedX>0</speedX>
   <speedY>0</speedY>
   <transparency>true</transparency>
-</Articuno>
+</cloudgun>
 
 
 <Articuno>

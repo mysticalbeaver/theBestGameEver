@@ -3,7 +3,9 @@
 #include "ioManager.h"
 #include "clock.h"
 #include "world.h"
+#include "health.h"
 #include "viewport.h"
+#include <cmath>  // for sqrtf
 
 class Manager {
 public:
@@ -11,6 +13,7 @@ public:
   ~Manager ();
   void play();
   void switchSprite();
+  void drawHUD(SDL_Surface* screen, int x, int y);
 
 private:
   const bool env;
