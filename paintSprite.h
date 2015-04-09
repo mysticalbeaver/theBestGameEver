@@ -17,8 +17,6 @@ public:
     return frames[currentFrame]; 
   }
 
-
-
 protected:
   std::vector<Frame *> frames;
   int worldWidth;

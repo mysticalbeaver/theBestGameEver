@@ -15,8 +15,7 @@ paintSprite::paintSprite( const std::string& name) :
   Drawable(name, 
            Vector2f(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"), 
                     Gamedata::getInstance().getXmlInt(name+"/startLoc/y")), 
-           Vector2f(Gamedata::getInstance().getRandInRange(0.5,Gamedata::getInstance().getXmlInt(name+"/speedX")), 
-                    Gamedata::getInstance().getRandInRange(0.5,Gamedata::getInstance().getXmlInt(name+"/speedY")))
+           Vector2f(0,0)
            ),
   frames( FrameFactory::getInstance().getFrames(name) ),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
@@ -36,7 +35,7 @@ SDL_Surface* surface = frames[i]->getSurface();
   frames[i] = new Frame(name, surface, scale);
 }
 
-setVelocity(Vector2f(scale*Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt(name+"/speedX")),scale*Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt(name+"/speedY")));
+setVelocity(Vector2f(scale*Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt(name+"/speedX")),scale*Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt(name+"/speedY"))));
 
 }
 
