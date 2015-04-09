@@ -4,6 +4,7 @@
 #include "twowaymultisprite.h"
 #include "playersprite.h"
 #include "multisprite.h"
+#include "flatMultisprite.h"
 #include "paintSprite.h"
 #include "aaline.h"
 #include "sprite.h"
@@ -45,10 +46,11 @@ Manager::Manager() :
   atexit(SDL_Quit);
   unsigned int n = Gamedata::getInstance().getXmlInt("numberofarticunos");
   unsigned int j = Gamedata::getInstance().getXmlInt("numberofswirls");
-  sprites.reserve(n+j+2);
+  sprites.reserve(n+j+3);
   
   sprites.push_back( new PlayerSprite("cloudgun") );
   sprites.push_back( new TwoWayMultiSprite("mewtwo") );
+  sprites.push_back( new FlatMultiSprite("crab") );
 
   for (unsigned int i = 0; i < j; ++i){
   	sprites.push_back(new Sprite("swirl"));

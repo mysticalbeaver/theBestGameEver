@@ -137,6 +137,22 @@
   <transparency>true</transparency>
 </mew>
 
+<crab>
+  <file>images/crab_smaller.png</file>
+  <startLoc x="20" y="450"/>
+
+  <frames>4</frames>
+  <frameInterval>100</frameInterval>
+
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>155</width>
+  <height>117</height>
+  <speedX>-500</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</crab>
+
 <mewtwo>
   <file>images/mewtwo.png</file>
   <startLoc x="190" y="100"/>
