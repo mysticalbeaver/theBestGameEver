@@ -2,11 +2,28 @@
 <GameData>
 <!-- screenTitle is also used to identify you and your animation. 
      So make sure to include your name as part of the screenTitle -->
-<screenTitle>The Incredibly Dangerous Articuno Swarm</screenTitle>
+<screenTitle>Brandon + Anna's Mew Mashup</screenTitle>
 <maxStringSize>50</maxStringSize>
 <numberofswirls>60</numberofswirls>
 <numberofarticunos>20</numberofarticunos>
 <startscale>1</startscale>
+
+<frameMax>400</frameMax>
+<username>bburkho</username>
+
+<view>
+  <width>500</width>
+  <height>588</height>
+</view>
+
+<world>
+  <width>3000</width>
+  <height>588</height>
+</world>
+<clock>
+  <fpsLoc x="10" y="10"/>
+  <secondsLoc x="10" y="30"/>
+</clock>
 
 <hudStartX>280</hudStartX>
 <hudStartY>60</hudStartY>
@@ -55,23 +72,6 @@
 <frameCap>60</frameCap>
 <!-- use 1 or 0 to toggle framerate cap -->
 <framesAreCapped>1</framesAreCapped>
-
-<frameMax>400</frameMax>
-<username>bburkho</username>
-
-<view>
-  <width>500</width>
-  <height>588</height>
-</view>
-
-<world>
-  <width>3000</width>
-  <height>588</height>
-</world>
-<clock>
-  <fpsLoc x="10" y="10"/>
-  <secondsLoc x="10" y="30"/>
-</clock>
 
 <middle>
   <file>images/clouds.png</file>

@@ -79,7 +79,7 @@ void Manager::draw() const {
   }
 
   //io.printMessageAt("Press T to switch sprites", 10, 70);
-  io.printMessageAt(title, 10, 550);
+  io.printMessageAt(title, 10, 567);
   viewport.draw();
 
 	// removed SDL_flip from here and put in game loop

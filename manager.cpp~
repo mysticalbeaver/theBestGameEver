@@ -50,7 +50,7 @@ Manager::Manager() :
   
   sprites.push_back( new PlayerSprite("cloudgun") );
   sprites.push_back( new TwoWayMultiSprite("mewtwo") );
-  sprites.push_back( new MultiSprite("crab") );
+  sprites.push_back( new FlatMultiSprite("crab") );
 
   for (unsigned int i = 0; i < j; ++i){
   	sprites.push_back(new Sprite("swirl"));
@@ -79,7 +79,7 @@ void Manager::draw() const {
   }
 
   //io.printMessageAt("Press T to switch sprites", 10, 70);
-  io.printMessageAt(title, 10, 550);
+  io.printMessageAt(title, 10, 562);
   viewport.draw();
 
 	// removed SDL_flip from here and put in game loop

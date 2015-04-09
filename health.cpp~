@@ -3,8 +3,8 @@
 Health::Health() :
   screen(IOManager::getInstance().getScreen()),
   start(Vector2f(20, 20)), 
-  totalLength(200), 
-  currentLength(200), 
+  totalLength(430), 
+  currentLength(430), 
   thick(14), 
   increments(1),
   interval(50),

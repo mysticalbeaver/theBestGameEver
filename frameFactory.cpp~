@@ -82,6 +82,10 @@ Frame* FrameFactory::getFrame(const std::string& name) {
     IOManager::getInstance().loadAndSet(
         gdata.getXmlStr(name+"/file"),
         gdata.getXmlBool(name+"/transparency"));
+  Uint16 srcX = gdata.getXmlInt(name+"/srcX");
+  Uint16 srcY = gdata.getXmlInt(name+"/srcY");
+  Uint16 width = gdata.getXmlInt(name+"/width");
+  Uint16 height = gdata.getXmlInt(name+"/height");
   
   //add to vector of single frame surfaces  
   surfaces[name] = surface;
