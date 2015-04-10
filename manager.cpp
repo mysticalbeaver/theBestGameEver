@@ -56,6 +56,7 @@ Manager::Manager() :
   	sprites.push_back(new Sprite("swirl"));
   	}
   
+//make sure you put the paintsprites on last
   for (unsigned int i = 0; i < n; ++i){
   	depthMakers.push_back(new paintSprite("Articuno"));
   	}	
@@ -65,8 +66,17 @@ Manager::Manager() :
 
 void Manager::draw() const {
   back.draw();
+  for (unsigned i = 0; i < depthMakers.size()/3; ++i) {
+    depthMakers[i]->draw();
+  }
   middle.draw();
+  for (unsigned i = depthMakers.size()/3; i < 2*depthMakers.size()/3; ++i) {
+    depthMakers[i]->draw();
+  }
   front.draw();
+  for (unsigned i = 2*depthMakers.size()/3; i < depthMakers.size(); ++i) {
+    depthMakers[i]->draw();
+  }
 	
   //draw the sprites in reverse so mew and mewtwo are on top of all
   //the articunos and swirls
@@ -74,9 +84,6 @@ void Manager::draw() const {
     sprites[i]->draw();
   }
 
-  for (unsigned i = 0; i < depthMakers.size(); ++i) {
-    depthMakers[i]->draw();
-  }
 
   //io.printMessageAt("Press T to switch sprites", 10, 70);
   io.printMessageAt(title, 10, 567);

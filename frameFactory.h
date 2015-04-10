@@ -12,6 +12,7 @@ public:
   Frame* getFrame(const std::string&);
 
   std::vector<Frame*> getFrames(const std::string&);
+  std::vector<Frame*> getPaintFrames(const std::string&);
 
 private:
   const Gamedata& gdata;
@@ -25,4 +26,5 @@ private:
   FrameFactory();
   FrameFactory(const FrameFactory&);
   FrameFactory& operator=(const FrameFactory&);
+  int paintSprites;
 };

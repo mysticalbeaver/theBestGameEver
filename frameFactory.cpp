@@ -2,13 +2,15 @@
 #include "extractSurface.h"
 #include "ioManager.h"
 #include "vector2f.h"
+#include "SDL/SDL_rotozoom.h"
 
 FrameFactory::FrameFactory() : 
   gdata( Gamedata::getInstance() ), 
   surfaces(),
   multiSurfaces(),
   frames(),
-  multiFrames()
+  multiFrames(),
+  paintSprites( 0 )
 {}
 
 FrameFactory::~FrameFactory() {
@@ -123,4 +125,66 @@ std::vector<Frame*> FrameFactory::getFrames(const std::string& name) {
   multiSurfaces[name] = surfaces;
   multiFrames[name] = frames;
   return multiFrames[name];
+}
+
+std::vector<Frame*> FrameFactory::getPaintFrames(const std::string& name) {
+  paintSprites++;
+  static int articunos;
+  static double scale;
+  string newname;
+
+//we only have to create a new surface and frames when
+//we need to look at the next size of painted articunos 
+ if (paintSprites == 1) {
+    articunos = gdata.getXmlInt("numberofarticunos");
+    scale = 0.1;
+    newname = name;
+  }
+  else if (paintSprites == (articunos/3)) {
+    scale = 0.5;
+    newname = name + '2';
+  }
+  else if (paintSprites == ((2*articunos)/3)) {
+    scale = 1.0;
+    newname = name + '3';
+  }
+  else if (paintSprites < (articunos/3)) {
+    newname = name;
+    return multiFrames[newname];
+  }
+  else if (paintSprites < ((2*articunos)/3)) {
+    newname = name + '2';
+    return multiFrames[newname];
+  }
+  else if (paintSprites <= articunos) {
+    newname = name + '3';
+    return multiFrames[newname];
+  }
+
+//it is the first one of 3 sizes we are creating
+  SDL_Surface* surface = IOManager::
+     getInstance().loadAndSet(gdata.getXmlStr(name+"/file"), true);
+  unsigned numberOfFrames = gdata.getXmlInt(name+"/frames");
+  std::vector<Frame*> frames;
+  std::vector<SDL_Surface*> surfaces;
+  frames.reserve(numberOfFrames);
+  surfaces.reserve(numberOfFrames);
+  Uint16 srcX = gdata.getXmlInt(name+"/srcX");
+  Uint16 srcY = gdata.getXmlInt(name+"/srcY");
+  Uint16 width = gdata.getXmlInt(name+"/width");
+  Uint16 height = gdata.getXmlInt(name+"/height");
+
+  SDL_Surface* surf;
+  for (unsigned i = 0; i < numberOfFrames; ++i) {
+    unsigned frameX = i * width + srcX;
+   surf = zoomSurface(ExtractSurface::getInstance().
+               get(surface, width, height, frameX, srcY),
+	       scale, scale, SMOOTHING_ON); 
+    surfaces.push_back( surf );
+    frames.push_back( new Frame(name, surf) );
+  }
+  SDL_FreeSurface(surface);
+  multiSurfaces[newname] = surfaces;
+  multiFrames[newname] = frames;
+  return multiFrames[newname];
 }

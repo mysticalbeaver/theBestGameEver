@@ -1,6 +1,7 @@
 #include "paintSprite.h"
 #include "gamedata.h"
 #include "frameFactory.h"
+#include "frame.h"
 #include "SDL/SDL_rotozoom.h"
 
 void paintSprite::advanceFrame(Uint32 ticks) {
@@ -17,7 +18,7 @@ paintSprite::paintSprite( const std::string& name) :
                     Gamedata::getInstance().getXmlInt(name+"/startLoc/y")), 
            Vector2f(0,0)
            ),
-  frames( FrameFactory::getInstance().getFrames(name) ),
+  frames( FrameFactory::getInstance().getPaintFrames(name) ),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   scale(Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt("startscale"))),
@@ -29,14 +30,8 @@ paintSprite::paintSprite( const std::string& name) :
   frameWidth(frames[0]->getWidth()),
   frameHeight(frames[0]->getHeight())
 { 
-	for(unsigned i = 0; i < frames.size(); ++i) {
-	SDL_Surface* surface = frames[i]->getSurface();
-	  surface = zoomSurface(surface,scale,scale,SMOOTHING_ON);
-	  frames[i] = new Frame(name, surface, scale);
-	}
-
-	setVelocity(Vector2f(scale*Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt(name+"/speedX")),scale*Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt(name+"/speedY"))));
-
+//change this in future version. Generating a random and then scaling it makes no sense
+setVelocity(Vector2f(scale*Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt(name+"/speedX")),scale*Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt(name+"/speedY"))));
 }
 
 paintSprite::paintSprite(const paintSprite& s) :
