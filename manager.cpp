@@ -169,8 +169,6 @@ void Manager::play() {
   bool done = false;
   clock.start();
 
-  //IOManager& zo = IOManager::getInstance();
-  //SDL_Surface * const creen = zo.getScreen();
   int counter = 0;
   int startX = Gamedata::getInstance().getXmlInt("hudStartX");
   int startY = Gamedata::getInstance().getXmlInt("hudStartY");
