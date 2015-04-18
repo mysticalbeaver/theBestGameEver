@@ -2,10 +2,10 @@
 <GameData>
 <!-- screenTitle is also used to identify you and your animation. 
      So make sure to include your name as part of the screenTitle -->
-<screenTitle>Brandon &amp; Anna's Mew Mashup</screenTitle>
+<screenTitle>Brandon + Anna's Mew Mashup</screenTitle>
 <maxStringSize>50</maxStringSize>
 <numberofswirls>60</numberofswirls>
-<numberofarticunos>20</numberofarticunos>
+<numberofarticunos>9</numberofarticunos>
 <startscale>1</startscale>
 
 <frameMax>400</frameMax>
@@ -121,22 +121,6 @@
   <unused>0</unused>
 </font>
 
-<mew>
-  <file>images/mew2.png</file>
-  <startLoc x="120" y="140"/>
-
-  <frames>12</frames>
-  <frameInterval>60</frameInterval>
-
-  <srcX>0</srcX>
-  <srcY>0</srcY>
-  <width>100</width>
-  <height>100</height>
-  <speedX>-500</speedX>
-  <speedY>500</speedY>
-  <transparency>true</transparency>
-</mew>
-
 <crab>
   <file>images/crab_smaller.png</file>
   <startLoc x="20" y="450"/>
@@ -164,7 +148,7 @@
   <srcY>0</srcY>
   <width>105</width>
   <height>124</height>
-  <speedX>-800</speedX>
+  <speedX>-200</speedX>
   <speedY>0</speedY>
   <transparency>true</transparency>
 </mewtwo>
@@ -188,12 +172,15 @@
 
   <frames>40</frames>
   <frameInterval>20</frameInterval>
-
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
   <srcX>0</srcX>
   <srcY>0</srcY>
   <width>172</width>
   <height>171</height>
-  <speedX>-400</speedX>
+  <speedX>5</speedX>
   <speedY>400</speedY>
   <transparency>true</transparency>
 </Articuno>

@@ -6,7 +6,7 @@
 
 class MissileSprite : public Drawable {
 public:
-  MissileSprite(const std::string&);
+  MissileSprite(const std::string&, float x, float y, int power);
   MissileSprite(const MissileSprite&);
   virtual ~MissileSprite() { } 
 
@@ -16,7 +16,8 @@ public:
     return frames[currentFrame]; 
   }
 
-
+  bool collidedWith(const Drawable* d) const;
+  float distance(float x1, float y1, float x2, float y2) const;
 
 protected:
   const std::vector<Frame *> frames;
@@ -29,6 +30,7 @@ protected:
   float timeSinceLastFrame;
   int frameWidth;
   int frameHeight;
+  int time;
 
   void advanceFrame(Uint32 ticks);
 };

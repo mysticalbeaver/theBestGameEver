@@ -16,8 +16,8 @@ TwoWayMultiSprite::TwoWayMultiSprite( const std::string& name) :
   Drawable(name, 
            Vector2f(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"), 
                     Gamedata::getInstance().getXmlInt(name+"/startLoc/y")), 
-           Vector2f(Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt(name+"/speedX")), 
-                    Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt(name+"/speedY")))
+           Vector2f(Gamedata::getInstance().getXmlInt(name+"/speedX"), 
+                    Gamedata::getInstance().getXmlInt(name+"/speedY"))
            ),
   frames( FrameFactory::getInstance().getFrames(name) ),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),

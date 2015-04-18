@@ -4,8 +4,9 @@
 #include "twowaymultisprite.h"
 #include "playersprite.h"
 #include "multisprite.h"
-#include "flatMultisprite.h"
+#include "missilesprite.h"
 #include "paintSprite.h"
+#include "explodingSprite.h"
 #include "aaline.h"
 #include "sprite.h"
 #include "gamedata.h"
@@ -50,11 +51,7 @@ Manager::Manager() :
   
   sprites.push_back( new PlayerSprite("cloudgun") );
   sprites.push_back( new TwoWayMultiSprite("mewtwo") );
-  sprites.push_back( new FlatMultiSprite("crab") );
-
-  for (unsigned int i = 0; i < j; ++i){
-  	sprites.push_back(new Sprite("swirl"));
-  	}
+  sprites.push_back( new MultiSprite("crab") );
   
 //make sure you put the paintsprites on last
   for (unsigned int i = 0; i < n; ++i){
@@ -65,6 +62,7 @@ Manager::Manager() :
 }
 
 void Manager::draw() const {
+
   back.draw();
   for (unsigned i = 0; i < depthMakers.size()/3; ++i) {
     depthMakers[i]->draw();
@@ -84,12 +82,9 @@ void Manager::draw() const {
     sprites[i]->draw();
   }
 
-
   //io.printMessageAt("Press T to switch sprites", 10, 70);
   io.printMessageAt(title, 10, 567);
   viewport.draw();
-
-	// removed SDL_flip from here and put in game loop
 }
 
 void Manager::makeFrame() {
@@ -103,9 +98,7 @@ void Manager::makeFrame() {
 }
 
 void Manager::switchSprite() {
-//this method of switching between the first and second sprite is why 
-//I draw the sprites in reverse
-  currentSprite = 1 - currentSprite;
+  currentSprite = (currentSprite + 1) % 3;
   viewport.setObjectToTrack(sprites[currentSprite]);
 }
 
@@ -175,56 +168,93 @@ void Manager::play() {
 
   Health bar;
 
-  while ( not done ) {
-Uint8 *keystate = SDL_GetKeyState(NULL);
-    while ( SDL_PollEvent(&event) ) {
-      
-      if (event.type ==  SDL_QUIT) { done = true; break; }
-      if(event.type == SDL_KEYDOWN) {
-        if (keystate[SDLK_ESCAPE] || keystate[SDLK_q]) {
-          done = true;
-          break;
-        }
-        if ( keystate[SDLK_t] ) {
-          switchSprite();
-        }
-        if ( keystate[SDLK_p] ) {
-          if ( clock.isPaused() ) clock.unpause(); 
-          else clock.pause();
-        }
-        if ( keystate[SDLK_F3] ) {
-          clock.toggleSloMo();
-        }
-		  if( keystate[SDLK_w] ) {
-		  	 sprites[0]->up();
-		  }
-		  if ( keystate[SDLK_s] ) {
-		 	 sprites[0]->down();
-		  }
-        if ( keystate[SDLK_F4] && !makeVideo ) {
-          std::cout << "Making video frames" << std::endl;
-          makeVideo = true;
-        }
-		  if ( keystate[SDLK_F1] ) {
-          counter = 0;
-        }
-	     if (keystate[SDLK_SPACE]) {
-           bar.powerUp();
-        }
-      } else if( event.type == SDL_KEYUP ) {
-		    sprites[0]->stopMove();
-      }
-    }
+  int timeSinceMissile = 0;
+  bool shot = false;
 
-    draw(); 
-	 if(counter < 200) {
-	 	drawHUD(screen, startX, startY);
-	 }
-	 counter++;
-    bar.draw(); 
-	 SDL_Flip(screen);
-    update();
-	 bar.update(clock.getTicksSinceLastFrame());
+	while ( not done ) {
+	Uint8 *keystate = SDL_GetKeyState(NULL);
+		while ( SDL_PollEvent(&event) ) {
+ 			if (event.type ==  SDL_QUIT) { 
+				done = true; 
+				break;
+			}
+			if(event.type == SDL_KEYDOWN) {
+        			if (keystate[SDLK_ESCAPE] || keystate[SDLK_q]) {
+          				done = true;
+          				break;
+        			}
+        			if ( keystate[SDLK_t] ) {
+          				switchSprite();
+        			}
+        			if ( keystate[SDLK_p] ) {
+          				if ( clock.isPaused() )
+						clock.unpause(); 
+         				else 
+						clock.pause();
+        			}
+        			if ( keystate[SDLK_F3] ) {
+        				clock.toggleSloMo();
+        			}
+				if( keystate[SDLK_w] ) {
+					sprites[0]->up();
+				}
+				if ( keystate[SDLK_s] ) {
+	 				sprites[0]->down();
+				}
+				if (keystate[SDLK_RETURN] and not shot) {
+					sprites.push_back(new MissileSprite("Articuno",sprites[0]->X(),sprites[0]->Y(),bar.getLen()));
+					bar.reset();
+					viewport.setObjectToTrack(sprites[sprites.size()-1]);
+					timeSinceMissile = 0;
+					shot = true;
+				}
+        			if ( keystate[SDLK_F4] && !makeVideo ) {
+        				std::cout << "Making video frames" << std::endl;
+        				makeVideo = true;
+        			}
+				if ( keystate[SDLK_F1] ) {
+        				counter = 0;
+        			}
+				if (keystate[SDLK_SPACE]) {
+        				bar.powerUp();
+       				}
+      			} 
+    			else if( event.type == SDL_KEYUP ) {
+				sprites[0]->stopMove();
+      			}
+    		}
+    	 	draw(); 
+	 	if(counter < 200) {
+	 		drawHUD(screen, startX, startY);
+	 	}
+		counter++;
+        	bar.draw(); 
+		SDL_Flip(screen);
+		update();
+		bar.update(clock.getTicksSinceLastFrame());
+		timeSinceMissile += clock.getTicksSinceLastFrame();
 
-  }
+		if (shot == true) {
+			std::vector<paintSprite*>::iterator sprite = depthMakers.begin() + ((2*depthMakers.size())/3);
+			while ( sprite != depthMakers.end() ) {
+				if (not dynamic_cast<ExplodingSprite*>(*sprite)) {
+				if ( static_cast<MissileSprite*>(sprites[sprites.size()-1])->collidedWith(*sprite) ) {
+					paintSprite* temp = (*sprite);
+					(*sprite) = new ExplodingSprite(const_cast<paintSprite&>(**sprite));
+					delete temp;
+					shot = false;
+					viewport.setObjectToTrack(sprites[0]);
+					break; 
+				}
+				}
+    				++sprite;
+  			}
+  		}
+
+		if (shot == true and sprites[sprites.size()-1]->Y() > viewport.getVH()) {
+			shot = false;
+			viewport.setObjectToTrack(sprites[0]);
+			sprites.pop_back();
+		}
+	}
 }

@@ -8,7 +8,6 @@
 #include <cmath>  // for sqrtf
 #include "paintSprite.h"
 
-
 class Manager {
 public:
   Manager ();
@@ -29,7 +28,7 @@ private:
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;
-  std::vector<paintSprite*> depthMakers;
+  std::list<paintSprite*> depthMakers;
   int currentSprite;
 
   bool makeVideo;

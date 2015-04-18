@@ -11,6 +11,7 @@ public:
   void update(Uint32);
   void reset() { currentLength = totalLength; }
   void powerUp(); 
+  int getLen() { return currentLength; }
 
 private:
   SDL_Surface* screen;

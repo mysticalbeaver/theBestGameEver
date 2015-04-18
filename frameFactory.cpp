@@ -10,7 +10,8 @@ FrameFactory::FrameFactory() :
   multiSurfaces(),
   frames(),
   multiFrames(),
-  paintSprites( 0 )
+  paintSpritesDrawn(0),
+  paintSprites(0)
 {}
 
 FrameFactory::~FrameFactory() {
@@ -128,35 +129,34 @@ std::vector<Frame*> FrameFactory::getFrames(const std::string& name) {
 }
 
 std::vector<Frame*> FrameFactory::getPaintFrames(const std::string& name) {
-  paintSprites++;
-  static int articunos;
+  paintSpritesDrawn++;
   static double scale;
   string newname;
 
 //we only have to create a new surface and frames when
 //we need to look at the next size of painted articunos 
- if (paintSprites == 1) {
-    articunos = gdata.getXmlInt("numberofarticunos");
-    scale = 0.1;
+ if (paintSpritesDrawn == 1) {
+    paintSprites = gdata.getXmlInt("numberofarticunos");
+    scale = 0.25;
     newname = name;
   }
-  else if (paintSprites == (articunos/3)) {
+  else if (paintSpritesDrawn == (paintSprites/3)+1) {
     scale = 0.5;
     newname = name + '2';
   }
-  else if (paintSprites == ((2*articunos)/3)) {
-    scale = 1.0;
+  else if (paintSpritesDrawn == ((2*paintSprites)/3)+1) {
+    scale = 0.75;
     newname = name + '3';
   }
-  else if (paintSprites < (articunos/3)) {
+  else if (paintSpritesDrawn < (paintSprites/3)+1) {
     newname = name;
     return multiFrames[newname];
   }
-  else if (paintSprites < ((2*articunos)/3)) {
+  else if (paintSpritesDrawn < ((2*paintSprites/3)+1)) {
     newname = name + '2';
     return multiFrames[newname];
   }
-  else if (paintSprites <= articunos) {
+  else {
     newname = name + '3';
     return multiFrames[newname];
   }

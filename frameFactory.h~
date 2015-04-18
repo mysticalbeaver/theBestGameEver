@@ -26,6 +26,5 @@ private:
   FrameFactory();
   FrameFactory(const FrameFactory&);
   FrameFactory& operator=(const FrameFactory&);
-  int paintSpritesDrawn;
   int paintSprites;
 };

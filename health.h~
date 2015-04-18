@@ -11,6 +11,8 @@ public:
   void update(Uint32);
   void reset() { currentLength = totalLength; }
   void powerUp(); 
+  int getLen();
+
 private:
   SDL_Surface* screen;
   Vector2f start;
