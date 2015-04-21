@@ -11,6 +11,7 @@
 #include "sprite.h"
 #include "gamedata.h"
 #include "manager.h"
+#include "sound.h"
 
 Manager::~Manager() { 
   for (unsigned i = 0; i < sprites.size(); ++i) {
@@ -167,6 +168,7 @@ void Manager::play() {
   int startY = Gamedata::getInstance().getXmlInt("hudStartY");
 
   Health bar;
+  SDLSound sound;
 
   int timeSinceMissile = 0;
   bool shot = false;
@@ -195,36 +197,40 @@ void Manager::play() {
         			if ( keystate[SDLK_F3] ) {
         				clock.toggleSloMo();
         			}
-				if( keystate[SDLK_w] ) {
-					sprites[0]->up();
-				}
-				if ( keystate[SDLK_s] ) {
-	 				sprites[0]->down();
-				}
-				if (keystate[SDLK_RETURN] and not shot) {
-					sprites.push_back(new MissileSprite("Articuno",sprites[0]->X(),sprites[0]->Y(),bar.getLen()));
-					bar.reset();
-					viewport.setObjectToTrack(sprites[sprites.size()-1]);
-					timeSinceMissile = 0;
-					shot = true;
-				}
+				   if( keystate[SDLK_w] ) {
+					   sprites[0]->up();
+				   }
+					if ( keystate[SDLK_s] ) {
+	 					sprites[0]->down();
+					}
+					if (keystate[SDLK_RETURN] and not shot) {
+						sprites.push_back(new MissileSprite("Articuno",sprites[0]->X(),sprites[0]->Y(),bar.getLen()));
+						bar.reset();
+						viewport.setObjectToTrack(sprites[sprites.size()-1]);
+						timeSinceMissile = 0;
+						shot = true;
+						sound[6];
+					}
         			if ( keystate[SDLK_F4] && !makeVideo ) {
         				std::cout << "Making video frames" << std::endl;
         				makeVideo = true;
         			}
-				if ( keystate[SDLK_F1] ) {
-        				counter = 0;
-        			}
-				if (keystate[SDLK_SPACE]) {
-        				bar.powerUp();
-       				}
-      			} 
-    			else if( event.type == SDL_KEYUP ) {
+					if ( keystate[SDLK_F1] ) {
+		     				counter = 0;
+		     		}
+					if (keystate[SDLK_SPACE]) {
+							// need to make it so that it continually 
+							// fills the heatlth bar
+		     				bar.powerUp();
+		    		}
+		   } 
+    		else if( event.type == SDL_KEYUP ) {
 				sprites[0]->stopMove();
-      			}
-    		}
-    	 	draw(); 
-	 	if(counter < 200) {
+      	}
+    	}
+    	draw(); 
+		// draw the HUD for the first 3 seconds
+	 	if(counter < 300) {
 	 		drawHUD(screen, startX, startY);
 	 	}
 		counter++;
