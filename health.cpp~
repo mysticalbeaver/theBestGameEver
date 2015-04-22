@@ -3,8 +3,9 @@
 Health::Health() :
   screen(IOManager::getInstance().getScreen()),
   start(Vector2f(20, 20)), 
-  totalLength(430), 
-  currentLength(430), 
+  isPoweringUp(0),
+  totalLength(440), 
+  currentLength(440), 
   thick(14), 
   increments(1),
   interval(50),
@@ -19,6 +20,7 @@ Health::Health(int sx, int sy, int tl, int cl,
                float t, int inc, Uint32 c, float sp):
   screen(IOManager::getInstance().getScreen()),
   start(Vector2f(sx, sy)), 
+  isPoweringUp(0),
   totalLength(tl), 
   currentLength(cl), 
   thick(t), 
@@ -57,13 +59,13 @@ void Health::draw() const {
                       start[0]+currentLength, start[1], 
                       thick, color);
 }
+
 void Health::update(Uint32 ticks) {
   deltaTime += ticks;
-  /* previously, decremented on its own
-   if ( currentLength > 0 && deltaTime > interval ) {
-    deltaTime = 0;
-    currentLength -= increments;
-  }*/
+
+   if(isPoweringUp && currentLength != totalLength) {
+		currentLength+= 10;
+	}
 
 	if(currentLength == totalLength) {
 		currentLength = 0;
@@ -71,8 +73,6 @@ void Health::update(Uint32 ticks) {
 }
 
 void Health::powerUp() {
-  if( currentLength != totalLength) {
-  		currentLength+= 10;
-  }
+  isPoweringUp = !isPoweringUp;
 }
 

@@ -1,18 +1,16 @@
-#ifndef CHUNK__H
-#define CHUNK__H
 #include <iostream>
 #include <cmath>
-#include "explodingSprite.h"
+#include "explodingTWSprite.h"
 
-ExplodingSprite::ExplodingSprite(const paintSprite& s) :
-  paintSprite(s), 
+ExplodingTWSprite::ExplodingTWSprite(const MultiSprite& k) :
+  MultiSprite(k), 
   chunks(), 
   freeList(),
   frames() {
-  makeChunks(Gamedata::getInstance().getXmlInt(s.getName()+"/chunk/size"));
+  		makeChunks(Gamedata::getInstance().getXmlInt(k.getName()+"/chunk/size"));
 }
 
-ExplodingSprite::~ExplodingSprite() { 
+ExplodingTWSprite::~ExplodingTWSprite() { 
   for ( unsigned int i = 0; i < frames.size(); ++i ) {
     delete frames[i]; // ExplodingSprite made them, so it deletes them
   }
@@ -20,7 +18,7 @@ ExplodingSprite::~ExplodingSprite() {
   freeList.clear();   // still ...
 }
 
-void ExplodingSprite::draw() const { 
+void ExplodingTWSprite::draw() const { 
   // Override draw; use the draw in Chunk, which derives from Sprite.
   // So the draw we're using is actually in Sprite
   std::list<Chunk>::const_iterator ptr = chunks.begin();
@@ -30,7 +28,7 @@ void ExplodingSprite::draw() const {
   }
 }
 
-void ExplodingSprite::update(Uint32 ticks) { 
+void ExplodingTWSprite::update(Uint32 ticks) { 
   std::list<Chunk>::iterator ptr = chunks.begin();
   while (ptr != chunks.end()) {
     ptr->update(ticks);
@@ -42,7 +40,7 @@ void ExplodingSprite::update(Uint32 ticks) {
   }
 }
 
-void ExplodingSprite::makeChunks(unsigned int n) { 
+void ExplodingTWSprite::makeChunks(unsigned int n) { 
   // Break the SDL_Surface into n*n squares; where each square
   // has width and height of frameWidth/n and frameHeight/n
   unsigned int chunk_width = std::max(1u, getFrame()->getWidth()/n);

@@ -7,11 +7,13 @@
 #include "viewport.h"
 #include <cmath>  // for sqrtf
 #include "paintSprite.h"
+#include "multisprite.h"
 
 class Manager {
 public:
   Manager ();
   ~Manager ();
+  void reset();
   void play();
   void switchSprite();
   void drawHUD(SDL_Surface* screen, int x, int y);
@@ -28,6 +30,7 @@ private:
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;
+  std::vector<MultiSprite*> crabz;
   std::vector<paintSprite*> depthMakers;
   int currentSprite;
 
@@ -43,4 +46,6 @@ private:
   Manager(const Manager&);
   Manager& operator=(const Manager&);
   void makeFrame();
+
+  int scoreThatYouHaveReceivedBasedOnTheNumberOfSpritesThatHaveExploded;
 };

@@ -31,20 +31,6 @@ void PlayerSprite::draw() const {
   frame->draw(x, y);
 }
 
-void PlayerSprite::up() {
-  moving = true;
-  velocityY(-100);
-}
-
-void PlayerSprite::down() {
-  moving = true;
-  velocityY(100);
-}
-
-void PlayerSprite::stopMove() {
-  moving = false;
-}
-
 PlayerSprite& PlayerSprite::operator=(const PlayerSprite& rhs) {
   Drawable::operator=( rhs );
   frame = rhs.frame;
@@ -71,3 +57,4 @@ void PlayerSprite::update(Uint32 ticks) {
   }
     velocityX( 0 ); 
 }
+

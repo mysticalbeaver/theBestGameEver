@@ -5,7 +5,7 @@
 <screenTitle>Brandon + Anna's Mew Mashup</screenTitle>
 <maxStringSize>50</maxStringSize>
 <numberofswirls>60</numberofswirls>
-<numberofarticunos>9</numberofarticunos>
+<numberofarticunos>30</numberofarticunos>
 <startscale>1</startscale>
 
 <frameMax>400</frameMax>
@@ -113,7 +113,8 @@
 </front>
 
 <font name="font">
-  <file>font/dyslexic-bold.otf</file>
+  <!--<file>font/dyslexic-bold.otf</file>-->
+  <file>font/Lugosi.otf</file>
   <size>16</size>
   <red>0</red>
   <green>0</green>

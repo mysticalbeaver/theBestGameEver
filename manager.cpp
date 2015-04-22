@@ -3,9 +3,7 @@
 #include <iomanip>
 #include "twowaymultisprite.h"
 #include "playersprite.h"
-#include "multisprite.h"
 #include "missilesprite.h"
-#include "paintSprite.h"
 #include "explodingSprite.h"
 #include "aaline.h"
 #include "sprite.h"
@@ -32,6 +30,7 @@ Manager::Manager() :
   front("front", Gamedata::getInstance().getXmlInt("front/factor") ),
   viewport( Viewport::getInstance() ),
   sprites(),
+  crabz(),
   depthMakers(),
   currentSprite(0),
 
@@ -39,7 +38,8 @@ Manager::Manager() :
   frameCount( 0 ),
   username(  Gamedata::getInstance().getXmlStr("username") ),
   title( Gamedata::getInstance().getXmlStr("screenTitle") ),
-  frameMax( Gamedata::getInstance().getXmlInt("frameMax") )
+  frameMax( Gamedata::getInstance().getXmlInt("frameMax") ),
+  scoreThatYouHaveReceivedBasedOnTheNumberOfSpritesThatHaveExploded(0)
 {
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
     throw string("Unable to initialize SDL: ");
@@ -47,12 +47,17 @@ Manager::Manager() :
   SDL_WM_SetCaption(title.c_str(), NULL);
   atexit(SDL_Quit);
   unsigned int n = Gamedata::getInstance().getXmlInt("numberofarticunos");
-  unsigned int j = Gamedata::getInstance().getXmlInt("numberofswirls");
-  sprites.reserve(n+j+3);
+  unsigned int u = Gamedata::getInstance().getXmlInt("numberofcrabsthatareinthegame");
+
+  depthMakers.reserve(n);
+  crabz.reserve(u);
   
   sprites.push_back( new PlayerSprite("cloudgun") );
-  sprites.push_back( new TwoWayMultiSprite("mewtwo") );
-  sprites.push_back( new MultiSprite("crab") );
+  //sprites.push_back( new TwoWayMultiSprite("mewtwo") );
+
+	for(unsigned int i = 0; i < u; ++i) {
+		crabz.push_back( new MultiSprite("crab"));
+	}
   
 //make sure you put the paintsprites on last
   for (unsigned int i = 0; i < n; ++i){
@@ -77,6 +82,10 @@ void Manager::draw() const {
     depthMakers[i]->draw();
   }
 	
+  for (int i = crabz.size() - 1; i >= 0; --i) {
+    crabz[i]->draw();
+  }
+
   //draw the sprites in reverse so mew and mewtwo are on top of all
   //the articunos and swirls
   for (int i = sprites.size() - 1; i >= 0; --i) {
@@ -146,6 +155,9 @@ void Manager::update() {
   for (int i = sprites.size()-1; i >= 0; --i) {
     sprites[i]->update(ticks);
   }
+  for (unsigned i = 0; i < crabz.size(); ++i) {
+    crabz[i]->update(ticks);
+  }
   for (unsigned i = 0; i < depthMakers.size(); ++i) {
     depthMakers[i]->update(ticks);
   }
@@ -158,10 +170,16 @@ void Manager::update() {
   viewport.update(); // always update viewport last
 }
 
+void Manager::reset() {
+
+}
+
 void Manager::play() {
   SDL_Event event;
   bool done = false;
   clock.start();
+ 
+  bool isHoldingDownTheSpaceBarKey = 0;
 
   int counter = 0;
   int startX = Gamedata::getInstance().getXmlInt("hudStartX");
@@ -194,6 +212,9 @@ void Manager::play() {
          				else 
 						clock.pause();
         			}
+					if (keystate[SDLK_r]) {
+						reset();
+					}
         			if ( keystate[SDLK_F3] ) {
         				clock.toggleSloMo();
         			}
@@ -222,10 +243,15 @@ void Manager::play() {
 							// need to make it so that it continually 
 							// fills the heatlth bar
 		     				bar.powerUp();
+							isHoldingDownTheSpaceBarKey = 1;
 		    		}
 		   } 
     		else if( event.type == SDL_KEYUP ) {
 				sprites[0]->stopMove();
+				if( isHoldingDownTheSpaceBarKey) {
+					bar.powerUp();
+					isHoldingDownTheSpaceBarKey = 0;
+				}
       	}
     	}
     	draw(); 
@@ -242,18 +268,20 @@ void Manager::play() {
 
 		if (shot == true) {
 			std::vector<paintSprite*>::iterator sprite = depthMakers.begin() + ((2*depthMakers.size())/3);
+			std::vector<MultiSprite*>::iterator sprite2 = crabz.begin() + 1;
 			while ( sprite != depthMakers.end() ) {
 				if (not dynamic_cast<ExplodingSprite*>(*sprite)) {
-				if ( static_cast<MissileSprite*>(sprites[sprites.size()-1])->collidedWith(*sprite) ) {
-					paintSprite* temp = (*sprite);
-					(*sprite) = new ExplodingSprite(const_cast<paintSprite&>(**sprite));
-					delete temp;
-					shot = false;
-					viewport.setObjectToTrack(sprites[0]);
-					break; 
+					if ( static_cast<MissileSprite*>(sprites[sprites.size()-1])->collidedWith(*sprite) ) {
+						paintSprite* temp = (*sprite);
+						(*sprite) = new ExplodingSprite(const_cast<paintSprite&>(**sprite));
+						delete temp;
+						shot = false;
+						viewport.setObjectToTrack(sprites[0]);
+						++scoreThatYouHaveReceivedBasedOnTheNumberOfSpritesThatHaveExploded;
+						break;
+					}
 				}
-				}
-    				++sprite;
+    			++sprite;
   			}
   		}
 

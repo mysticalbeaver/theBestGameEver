@@ -24,7 +24,7 @@ public:
   void setName(const std::string& n) { name = n;    }
   virtual const Frame* getFrame() const = 0;
 
-  void up() {    moving = true;
+  void up() {   moving = true;
 		  velocityY(-100);
 	     }
 

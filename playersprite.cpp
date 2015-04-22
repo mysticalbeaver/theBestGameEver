@@ -57,3 +57,4 @@ void PlayerSprite::update(Uint32 ticks) {
   }
     velocityX( 0 ); 
 }
+

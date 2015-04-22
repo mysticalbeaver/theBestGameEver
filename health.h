@@ -16,6 +16,7 @@ public:
 private:
   SDL_Surface* screen;
   Vector2f start;
+  bool isPoweringUp;
   int totalLength;
   int currentLength;
   int thick;
