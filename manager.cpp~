@@ -235,44 +235,70 @@ void Manager::play() {
 	while ( not done ) {
 	Uint8 *keystate = SDL_GetKeyState(NULL);
 		while ( SDL_PollEvent(&event) ) {
+		std::cout<< event.key.keysym.sym << std::endl;
  			if (event.type ==  SDL_QUIT) { 
 				done = true; 
 				break;
 			}
+	    		if( event.type == SDL_KEYUP ) {
+    			switch( event.key.keysym.sym ){
+                    		case SDLK_s:
+                    		case SDLK_w:
+					sprites[0]->stopMove();
+					break;                    				                       		
+                    		case SDLK_SPACE:
+                    			if(isHoldingDownTheSpaceBarKey) {
+						bar.powerUp();
+						isHoldingDownTheSpaceBarKey = 0;
+						sprites.push_back(new MissileSprite("Articuno",sprites[0]->X(),sprites[0]->Y(),bar.getLen()));
+						bar.reset();
+						shot = true;
+						viewport.setObjectToTrack(sprites[sprites.size()-1]);
+						timeSinceMissile = 0;
+						sound[6];
+					}	
+					break;
+				default:
+					break;		
+				}	
+      		}
 			if(event.type == SDL_KEYDOWN) {
-        			if (keystate[SDLK_ESCAPE] || keystate[SDLK_q]) {
+			switch( event.key.keysym.sym ){
+        			case SDLK_ESCAPE:
+        			case SDLK_q: 
           				done = true;
           				break;
-        			}
-        			if ( keystate[SDLK_p] ) {
+        			case SDLK_p:
           				if ( clock.isPaused() )
 						clock.unpause(); 
          				else 
 						clock.pause();
-        			}
-					if (keystate[SDLK_r]) {
-						reset();
-					}
-        			if ( keystate[SDLK_F3] ) {
+        				break;
+				case SDLK_r:
+					reset();
+					break;
+        			case SDLK_F3:
         				clock.toggleSloMo();
-        			}
-				if( keystate[SDLK_w] ) {
-					sprites[0]->up();
-				   }
-				if ( keystate[SDLK_s] ) {
-	 				sprites[0]->down();
-				}
-        			if ( keystate[SDLK_F4] && !makeVideo ) {
-        				std::cout << "Making video frames" << std::endl;
-        				makeVideo = true;
-        			}
-					if ( keystate[SDLK_F1] ) {
-		     				counter = 0;
-		     		}
-					if (keystate[SDLK_SPACE]) {
-		     				bar.powerUp();
-						isHoldingDownTheSpaceBarKey = 1;
-		    		}
+        				break;
+				case SDLK_w:
+					if (!isHoldingDownTheSpaceBarKey)
+						sprites[0]->up();
+					break;
+				case SDLK_s:
+					if(!isHoldingDownTheSpaceBarKey)
+	 					sprites[0]->down();
+	 				break;
+        			case SDLK_F4:
+        				if(!makeVideo) {
+        					std::cout << "Making video frames" << std::endl;
+        					makeVideo = true;
+        				}
+        				break;
+				case SDLK_F1:
+		     			counter = 0;
+				case SDLK_SPACE:
+		     			bar.powerUp();
+					isHoldingDownTheSpaceBarKey = 1;
 					/*if (keystate[SDLK_PLUS] || keystate[SDLK_EQUALS]) { 
 					  if ( !keyCatch ) {
 						 keyCatch = true;
@@ -285,21 +311,10 @@ void Manager::play() {
 						 SmartSprite::decrSafeDistance();
 					  }
 					} */
-		   } 
-    		else if( event.type == SDL_KEYUP ) {
-				sprites[0]->stopMove();
-				if( isHoldingDownTheSpaceBarKey) {
-					bar.powerUp();
-					isHoldingDownTheSpaceBarKey = 0;
-					sprites.push_back(new MissileSprite("Articuno",sprites[0]->X(),sprites[0]->Y(),bar.getLen()));
-					bar.reset();
-					shot = true;
-					viewport.setObjectToTrack(sprites[sprites.size()-1]);
-					timeSinceMissile = 0;
-					sound[6];
+				default:
+					break;
 				}
-					
-      		}
+		   } 
     	}
     	draw(); 
 		// draw the HUD for the first 3 seconds

@@ -42,6 +42,8 @@ protected:
 
 private:
   MissileSprite(const MissileSprite&);
+  MissileSprite& operator=(const MissileSprite&);
+  
   std::vector<CollisionStrategy*> strategies;
   CollisionStrategy * strategy;
 };
