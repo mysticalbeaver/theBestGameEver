@@ -14,8 +14,8 @@ void paintSprite::advanceFrame(Uint32 ticks) {
 
 paintSprite::paintSprite( const std::string& name) :
   Drawable(name, 
-           Vector2f(Gamedata::getInstance().getRandInRange(0,10*Gamedata::getInstance().getXmlInt(name+"/startLoc/x")), 
-                    Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt(name+"/startLoc/y"))), 
+           Vector2f(Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt("world/width")), 
+                    Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt("world/height"))), 
            Vector2f(0,0)
            ),
   frames( FrameFactory::getInstance().getPaintFrames(name) ),
