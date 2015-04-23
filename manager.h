@@ -31,6 +31,7 @@ private:
 
   std::vector<Drawable*> sprites;
   std::vector<Drawable*> crabz;
+  //std::vector<Drawable*> smartBirds;
   std::vector<Drawable*> depthMakers;
   int currentSprite;
 

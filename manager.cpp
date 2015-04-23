@@ -10,6 +10,7 @@
 #include "gamedata.h"
 #include "manager.h"
 #include "sound.h"
+//#include "smartSprite.h"
 
 Manager::~Manager() { 
   for (unsigned i = 0; i < sprites.size(); ++i) {
@@ -31,6 +32,7 @@ Manager::Manager() :
   viewport( Viewport::getInstance() ),
   sprites(),
   crabz(),
+  //smartBirds(),
   depthMakers(),
   currentSprite(0),
 
@@ -64,6 +66,10 @@ Manager::Manager() :
   for (unsigned int i = 0; i < n; ++i) {
   		depthMakers.push_back(new paintSprite("Articuno"));
   	}	
+
+  /*for (unsigned int i = 0; i < n; ++i) {
+		smartBirds.push_back(new SmartSprite("Articuno"));
+	} */
   
   viewport.setObjectToTrack(sprites[0]);
 }
@@ -92,6 +98,10 @@ void Manager::draw() const {
   for (int i = sprites.size() - 1; i >= 0; --i) {
     sprites[i]->draw();
   }
+
+  /*for ( unsigned int i = 0; i < smartSprites.size(); ++i) {
+		smartSprites.draw();
+	} */
 
   //io.printMessageAt("Press T to switch sprites", 10, 70);
   io.printMessageAt(title, 10, 567);
@@ -273,6 +283,18 @@ void Manager::play() {
 		     				bar.powerUp();
 							isHoldingDownTheSpaceBarKey = 1;
 		    		}
+					/*if (keystate[SDLK_PLUS] || keystate[SDLK_EQUALS]) { 
+					  if ( !keyCatch ) {
+						 keyCatch = true;
+						 SmartSprite::incrSafeDistance(); 
+					  }
+					}
+					if (keystate[SDLK_MINUS]) { 
+					  if ( !keyCatch ) {
+						 keyCatch = true;
+						 SmartSprite::decrSafeDistance();
+					  }
+					} */
 		   } 
     		else if( event.type == SDL_KEYUP ) {
 				sprites[0]->stopMove();
