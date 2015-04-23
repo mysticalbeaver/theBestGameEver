@@ -32,7 +32,7 @@ Manager::Manager() :
   viewport( Viewport::getInstance() ),
   sprites(),
   crabz(),
-  //smartBirds(),
+  smartBirds(),
   depthMakers(),
   currentSprite(0),
 
@@ -67,9 +67,9 @@ Manager::Manager() :
   		depthMakers.push_back(new paintSprite("Articuno"));
   	}	
 
-  /*for (unsigned int i = 0; i < n; ++i) {
-		smartBirds.push_back(new SmartSprite("Articuno"));
-	} */
+  /*for (unsigned int i = 0; i < 5; ++i) {
+		smartBirds.push_back(new SmartSprite("crab"));
+	}  */
   
   viewport.setObjectToTrack(sprites[0]);
 }
