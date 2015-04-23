@@ -9,6 +9,7 @@ public:
   static Clock& getInstance();  // This class is a Singleton
   unsigned int getTicksSinceLastFrame() const;
   unsigned int getTicksSinceInit() const { return sumOfTicks; }
+  unsigned int getSeconds() const { return sumOfTicks/1000;  }
 
   void toggleSloMo();
   bool isStarted() const { return started; }
@@ -20,6 +21,7 @@ public:
   void unpause();
   void draw() const;  // For debugging
   void update();  // Increments time/ticks
+  void reset();
 
 private:
   unsigned int ticks;
@@ -33,6 +35,7 @@ private:
   unsigned int time;
   unsigned int framecount;
   unsigned int begin;
+  unsigned int resetOffset;
 
 
   Clock();

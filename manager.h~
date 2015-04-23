@@ -30,7 +30,7 @@ private:
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;
-  std::vector<MultiSprite*> crabz;
+  std::vector<Drawable*> crabz;
   std::vector<Drawable*> depthMakers;
   int currentSprite;
 
@@ -48,4 +48,5 @@ private:
   void makeFrame();
 
   int scoreThatYouHaveReceivedBasedOnTheNumberOfSpritesThatHaveExploded;
+  bool isHoldingDownTheSpaceBarKey;
 };

@@ -25,7 +25,8 @@ Clock::Clock() :
   frames(0),
   time(1001),
   framecount(0),
-  begin(0)
+  begin(0),
+  resetOffset(0)
   {
   start();
 }
@@ -41,7 +42,8 @@ Clock::Clock(const Clock& c) :
   frames(c.frames),
   time(c.time),
   framecount(c.framecount),
-  begin(c.begin)
+  begin(c.begin),
+  resetOffset(c.resetOffset)
   {
   start();
 }
@@ -57,13 +59,13 @@ void Clock::draw() const {
 
 void Clock::update() {
 	int cticks = SDL_GetTicks();
-	ticks = cticks - sumOfTicks;
+	ticks = cticks - (sumOfTicks-resetOffset);
 	
 	//turning off the capped frame rate is done by changing the xml value
 	//framesAreCapped to 0
 	if (capped) {
 		while (ticks <= ceil(1000/frameCap))
-			ticks = SDL_GetTicks() - sumOfTicks;
+			ticks = SDL_GetTicks() - (sumOfTicks-resetOffset);
 	} 
 	
 	//calculate fps by counting the number of frames drawn in a second
@@ -82,10 +84,10 @@ void Clock::update() {
 	}
 	else if (sloMo) {
 		ticks = 1;
-		sumOfTicks = SDL_GetTicks();
+		sumOfTicks = SDL_GetTicks() - resetOffset;
 	}
 	else {
-		sumOfTicks += ticks;
+		sumOfTicks += (ticks - resetOffset);
 	}
 	framecount++;
 }
@@ -109,6 +111,11 @@ int Clock::getFps() const {
 void Clock::start() { 
   started = true; 
   paused = false; 
+}
+
+void Clock::reset() {
+	std::cout<<"clock reset"<<std::endl;
+	resetOffset += sumOfTicks;
 }
 
 void Clock::pause() { 

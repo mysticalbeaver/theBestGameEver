@@ -48,4 +48,5 @@ private:
   void makeFrame();
 
   int scoreThatYouHaveReceivedBasedOnTheNumberOfSpritesThatHaveExploded;
+  bool isHoldingDownTheSpaceBarKey;
 };

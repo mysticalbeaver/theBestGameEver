@@ -39,7 +39,8 @@ Manager::Manager() :
   username(  Gamedata::getInstance().getXmlStr("username") ),
   title( Gamedata::getInstance().getXmlStr("screenTitle") ),
   frameMax( Gamedata::getInstance().getXmlInt("frameMax") ),
-  scoreThatYouHaveReceivedBasedOnTheNumberOfSpritesThatHaveExploded(0)
+  scoreThatYouHaveReceivedBasedOnTheNumberOfSpritesThatHaveExploded(0),
+  isHoldingDownTheSpaceBarKey(0)
 {
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
     throw string("Unable to initialize SDL: ");
@@ -171,7 +172,37 @@ void Manager::update() {
 }
 
 void Manager::reset() {
+	sprites[0]->stopMove();
+	isHoldingDownTheSpaceBarKey = 0;
+	scoreThatYouHaveReceivedBasedOnTheNumberOfSpritesThatHaveExploded = 0;
+	
+	// restore the crabz
+   std::vector<Drawable*>::iterator pos = crabz.begin();
+	while ( pos != crabz.end() ) {
+		if (dynamic_cast<ExplodingSprite*>(*pos)) {
+			ExplodingSprite* temp = static_cast<ExplodingSprite*>(*pos);
+			(*pos) = new MultiSprite((*pos)->getName());
+			delete temp;
+		} else {
+			++pos;
+		}
+	}
 
+	// restore the Arduinos
+	std::vector<Drawable*>::iterator sprite = depthMakers.begin() + ((2*depthMakers.size())/3);
+	while(sprite != depthMakers.end() ) {
+		if(dynamic_cast<ExplodingSprite*>(*sprite)) {
+			std::cout << "restoring an Arduino" << std::endl;
+			ExplodingSprite* temp = static_cast<ExplodingSprite*>(*sprite);
+			(*sprite) = new paintSprite((*sprite)->getName());
+			delete temp;
+		} else {
+			++sprite;
+		}
+	}
+
+	// reset the clock
+	clock.reset(); 
 }
 
 void Manager::play() {
@@ -179,7 +210,7 @@ void Manager::play() {
   bool done = false;
   clock.start();
  
-  bool isHoldingDownTheSpaceBarKey = 0;
+  isHoldingDownTheSpaceBarKey = 0;
 
   int counter = 0;
   int startX = Gamedata::getInstance().getXmlInt("hudStartX");
@@ -253,9 +284,9 @@ void Manager::play() {
     	}
     	draw(); 
 		// draw the HUD for the first 3 seconds
-	 	if(counter < 300) {
+		if(counter < 300) {
 	 		drawHUD(screen, startX, startY);
-	 	}
+	 	} 
 		counter++;
         	bar.draw(); 
 		SDL_Flip(screen);
