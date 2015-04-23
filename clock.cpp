@@ -59,13 +59,13 @@ void Clock::draw() const {
 
 void Clock::update() {
 	int cticks = SDL_GetTicks();
-	ticks = cticks - (sumOfTicks-resetOffset);
-	
+	ticks = (cticks-resetOffset) - sumOfTicks;
+
 	//turning off the capped frame rate is done by changing the xml value
 	//framesAreCapped to 0
 	if (capped) {
 		while (ticks <= ceil(1000/frameCap))
-			ticks = SDL_GetTicks() - (sumOfTicks-resetOffset);
+			ticks = (SDL_GetTicks()-resetOffset) - sumOfTicks;
 	} 
 	
 	//calculate fps by counting the number of frames drawn in a second
@@ -87,14 +87,13 @@ void Clock::update() {
 		sumOfTicks = SDL_GetTicks() - resetOffset;
 	}
 	else {
-		sumOfTicks += (ticks - resetOffset);
+		sumOfTicks += ticks;
 	}
 	framecount++;
 }
 
 unsigned int Clock::getTicksSinceLastFrame() const {
-		return ticks;
- 
+		return ticks; 
 }
 
 void Clock::toggleSloMo() {
@@ -114,8 +113,8 @@ void Clock::start() {
 }
 
 void Clock::reset() {
-	std::cout<<"clock reset"<<std::endl;
 	resetOffset += sumOfTicks;
+	sumOfTicks = 0;
 }
 
 void Clock::pause() { 

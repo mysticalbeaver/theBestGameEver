@@ -71,6 +71,11 @@
 	<yLoc>100</yLoc>
 </hitCrab>
 
+<reset>
+	<text>Reset</text>
+	<yLoc>300</yLoc>
+</reset>
+
 <fpsLocX>282</fpsLocX>
 <fpsLocY>83</fpsLocY>
 
@@ -125,7 +130,7 @@
   <file>font/UpheavalPro.otf</file>
   <size>16</size>
   <biggerSize>24</biggerSize>
-  <biggestSize>150</biggestSize>
+  <biggestSize>100</biggestSize>
   <red>0</red>
   <green>0</green>
   <blue>0</blue>

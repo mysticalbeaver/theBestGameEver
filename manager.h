@@ -15,10 +15,10 @@ public:
   ~Manager ();
   void reset();
   void play();
-  void switchSprite();
   void drawHUD(SDL_Surface* screen, int x, int y);
   void drawScoreHUD();
   void hitCrabMessage();
+  void resetMessage();
 
 private:
   const bool env;
@@ -35,6 +35,8 @@ private:
   std::vector<Drawable*> crabz;
   std::vector<Drawable*> smartBirds;
   std::vector<Drawable*> depthMakers;
+  std::vector<Drawable*> explodedBirds;
+  std::vector<Drawable*> explodedCrabs;
   int currentSprite;
 
   bool makeVideo;

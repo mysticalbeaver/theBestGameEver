@@ -63,14 +63,14 @@ void paintSprite::update(Uint32 ticks) {
   if ( Y() < 0) {
     velocityY( abs( velocityY() ) );
   }
-  if ( Y() > worldHeight-frameHeight) {
+  if ( Y() > worldHeight-frameHeight/2) {
     velocityY( -abs( velocityY() ) );
   }
 
   if ( X() < 0) {
     velocityX( abs( velocityX() ) );
   }
-  if ( X() > worldWidth-frameWidth) {
+  if ( X() > worldWidth-frameWidth/2) {
     velocityX( -abs( velocityX() ));
   }  
 

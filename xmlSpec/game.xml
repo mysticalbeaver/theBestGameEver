@@ -71,6 +71,11 @@
 	<yLoc>100</yLoc>
 </hitCrab>
 
+<reset>
+	<text>Reset</text>
+	<yLoc>200</yLoc>
+</reset>
+
 <fpsLocX>282</fpsLocX>
 <fpsLocY>83</fpsLocY>
 

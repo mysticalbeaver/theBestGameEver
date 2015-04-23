@@ -16,7 +16,12 @@ Manager::~Manager() {
   for (unsigned i = 0; i < sprites.size(); ++i) {
     delete sprites[i];
   }
+
+	for (unsigned i = 0; i < crabz.size(); ++i) {
+    delete crabz[i];
+  }
  
+
   for (unsigned i = 0; i < depthMakers.size(); ++i) {
     delete depthMakers[i];
   }
@@ -34,6 +39,8 @@ Manager::Manager() :
   crabz(),
   smartBirds(),
   depthMakers(),
+  explodedBirds(),
+  explodedCrabs(),
   currentSprite(0),
 
   makeVideo( false ),
@@ -52,6 +59,7 @@ Manager::Manager() :
   unsigned int n = Gamedata::getInstance().getXmlInt("numberofarticunos");
   unsigned int u = Gamedata::getInstance().getXmlInt("numberofcrabsthatareinthegame");
 
+  sprites.reserve(2);
   depthMakers.reserve(n);
   crabz.reserve(u);
   
@@ -66,12 +74,7 @@ Manager::Manager() :
   for (unsigned int i = 0; i < n; ++i) {
   		depthMakers.push_back(new paintSprite("Articuno"));
   	}	
-
-  /*for (unsigned int i = 0; i < 5; ++i) {
-		smartBirds.push_back(new SmartSprite("crab"));
-	}  */
-  
-  viewport.setObjectToTrack(sprites[0]);
+   viewport.setObjectToTrack(sprites[0]);
 }
 
 void Manager::draw() const {
@@ -89,21 +92,14 @@ void Manager::draw() const {
     depthMakers[i]->draw();
   }
 	
-  for (int i = crabz.size() - 1; i >= 0; --i) {
+  for (unsigned int i = 0; i < crabz.size(); ++i) {
     crabz[i]->draw();
   }
 
-  //draw the sprites in reverse so mew and mewtwo are on top of all
-  //the articunos and swirls
-  for (int i = sprites.size() - 1; i >= 0; --i) {
+  for (unsigned int i = 0; i < sprites.size() ; ++i) {
     sprites[i]->draw();
   }
 
-  /*for ( unsigned int i = 0; i < smartSprites.size(); ++i) {
-		smartSprites.draw();
-	} */
-
-  //io.printMessageAt("Press T to switch sprites", 10, 70);
   io.printMessageAt(title, 10, 567);
   viewport.draw();
 }
@@ -116,11 +112,6 @@ void Manager::makeFrame() {
   std::string filename( strm.str() );
   std::cout << "Making frame: " << filename << std::endl;
   SDL_SaveBMP(screen, filename.c_str());
-}
-
-void Manager::switchSprite() {
-  currentSprite = (currentSprite + 1) % 3;
-  viewport.setObjectToTrack(sprites[currentSprite]);
 }
 
 void Manager::drawHUD(SDL_Surface* screen, int x, int y) {
@@ -175,6 +166,11 @@ void Manager::hitCrabMessage() {
 										Gamedata::getInstance().getXmlInt("hitCrab/yLoc"));
 }
 
+void Manager::resetMessage() {
+   io.printMessageCenteredAtBigger(Gamedata::getInstance().getXmlStr("reset/text"), 
+										Gamedata::getInstance().getXmlInt("reset/yLoc"));
+}
+
 void Manager::update() {
   clock.update();
   Uint32 ticks = clock.getTicksSinceLastFrame();
@@ -203,22 +199,30 @@ void Manager::reset() {
 
 	// restore the crabz
    std::vector<Drawable*>::iterator pos = crabz.begin();
-	while ( pos != crabz.end() ) {
+   std::vector<Drawable*>::iterator ec = explodedCrabs.begin();
+	while( pos != crabz.end() ) {
 		if (dynamic_cast<ExplodingSprite*>(*pos)) {
 			ExplodingSprite* temp = static_cast<ExplodingSprite*>(*pos);
-			(*pos) = new MultiSprite((*pos)->getName());
+			(*pos) = (*ec);
 			delete temp;
+			++ec;			
+			++pos;
 		} else {
 			++pos;
 		}
-	}
+	}	
+
 	// restore the birds
 	std::vector<Drawable*>::iterator sprite = depthMakers.begin() + ((2*depthMakers.size())/3);
+   std::vector<Drawable*>::iterator eb = explodedBirds.begin();
+
 	while(sprite != depthMakers.end() ) {
 		if(dynamic_cast<ExplodingSprite*>(*sprite)) {
 			ExplodingSprite* temp = static_cast<ExplodingSprite*>(*sprite);
-			(*sprite) = new paintSprite((*sprite)->getName());
+			(*sprite) = (*eb);
 			delete temp;
+			++eb;	
+			++sprite;
 		} else {
 			++sprite;
 		}
@@ -240,6 +244,7 @@ void Manager::play() {
   int startY = Gamedata::getInstance().getXmlInt("hudStartY");
 
   int hitCrabTime = 50;
+  int resetTime = 50;
 
   Health bar;
   SDLSound sound;
@@ -248,14 +253,23 @@ void Manager::play() {
   bool shot = false;
 
 	while ( not done ) {
-	Uint8 *keystate = SDL_GetKeyState(NULL);
 		while ( SDL_PollEvent(&event) ) {
-		//std::cout<< event.key.keysym.sym << std::endl;
- 			if (event.type ==  SDL_QUIT) { 
+ 			if (event.type ==  SDL_QUIT ) { 
 				done = true; 
 				break;
 			}
-	    		if( event.type == SDL_KEYUP ) {
+         if(event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_p) {
+				if(clock.isPaused() ){
+					clock.unpause();
+				} else {
+					clock.pause();
+					if(bar.getLen() != 0) {
+						bar.powerUp();
+						bar.reset();
+					}
+				}
+			}
+	    		if( event.type == SDL_KEYUP && not clock.isPaused() ) {
     			switch( event.key.keysym.sym ){
                     		case SDLK_s:
                     		case SDLK_w:
@@ -277,7 +291,7 @@ void Manager::play() {
 					break;		
 				}	
       		}
-			if(event.type == SDL_KEYDOWN) {
+			if(event.type == SDL_KEYDOWN && not clock.isPaused() ) {
 			switch( event.key.keysym.sym ){
         			case SDLK_ESCAPE:
         			case SDLK_q: 
@@ -291,6 +305,7 @@ void Manager::play() {
         				break;
 				case SDLK_r:
 					reset();
+					resetTime = 0;
 					break;
         			case SDLK_F3:
         				clock.toggleSloMo();
@@ -316,18 +331,6 @@ void Manager::play() {
 		     			bar.powerUp();
 					isHoldingDownTheSpaceBarKey = 1;
 					break;
-					/*if (keystate[SDLK_PLUS] || keystate[SDLK_EQUALS]) { 
-					  if ( !keyCatch ) {
-						 keyCatch = true;
-						 SmartSprite::incrSafeDistance(); 
-					  }
-					}
-					if (keystate[SDLK_MINUS]) { 
-					  if ( !keyCatch ) {
-						 keyCatch = true;
-						 SmartSprite::decrSafeDistance();
-					  }
-					} */
 				default:
 					break;
 				}
@@ -355,7 +358,7 @@ void Manager::play() {
 						Sprite weGonnaBlowThisOneUp((*sprite)->getName(),(*sprite)->getPosition(),
 							(*sprite)->getVelocity());
 						(*sprite) = new ExplodingSprite(const_cast<Sprite&>(weGonnaBlowThisOneUp));
-						delete temp;
+                  explodedBirds.push_back(temp);
 						shot = false;
 						viewport.setObjectToTrack(sprites[0]);
 						++scoreThatYouHaveReceivedBasedOnTheNumberOfSpritesThatHaveExploded;
@@ -367,6 +370,7 @@ void Manager::play() {
 		}
 
 		hitCrabTime++;
+		resetTime++;
 		if (shot == true) {
 			std::vector<Drawable*>::iterator sprite2 = crabz.begin();
 			while ( sprite2 != crabz.end() ) {
@@ -377,7 +381,7 @@ void Manager::play() {
 							(*sprite2)->getVelocity());
 						(*sprite2) = new ExplodingSprite(const_cast<Sprite&>(weGonnaBlowThisOneUp));					
 						hitCrabTime = 0;
-						delete temp;
+						explodedCrabs.push_back(temp);
 						shot = false;
 						viewport.setObjectToTrack(sprites[0]);
 						scoreThatYouHaveReceivedBasedOnTheNumberOfSpritesThatHaveExploded+=5;
@@ -390,13 +394,16 @@ void Manager::play() {
 		if(hitCrabTime < 50) {
 			hitCrabMessage();
 		}
+		if (resetTime < 50) {
+			resetMessage();
+		}
 
 		SDL_Flip(screen);
 
 		if (shot == true and sprites[sprites.size()-1]->Y() > viewport.getVH()) {
 			shot = false;
 			viewport.setObjectToTrack(sprites[0]);
-			sprites.pop_back();
+			//sprites.pop_back();
 		}
 	}
 }
