@@ -31,20 +31,13 @@ SDLSound::SDLSound() :
                    audioBuffers)){
     throw string("Unable to open audio!");
   }
- /// music = Mix_LoadMUS("sound/100Years.mp3");
+  music = Mix_LoadMUS("sound/theFinalCountdown.mp3");
   // Need to install midi to play the following:
   // music = Mix_LoadMUS("sound/ballad2.mid");
- /// if (!music) throw string("Couldn't load 100Years.mp3")+Mix_GetError();
+ if (!music) throw string("Couldn't load theFinalCountdown.mp3")+Mix_GetError();
 
   startMusic();
-  sounds.push_back( Mix_LoadWAV("sound/Boom.wav") );
-  sounds.push_back( Mix_LoadWAV("sound/Gun.wav") );
-  sounds.push_back( Mix_LoadWAV("sound/Thump.wav") );
-  sounds.push_back( Mix_LoadWAV("sound/phaser.wav") );
-  sounds.push_back( Mix_LoadWAV("sound/Putt1.wav") );
-  sounds.push_back( Mix_LoadWAV("sound/explosion.wav") );
   sounds.push_back( Mix_LoadWAV("sound/cannon.wav") );
-  sounds.push_back( Mix_LoadWAV("sound/Larc.wav") );
   for (unsigned int i = 0; i < sounds.size(); ++i) channels.push_back(i);
 }
 

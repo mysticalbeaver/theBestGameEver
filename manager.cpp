@@ -160,6 +160,21 @@ void Manager::drawHUD(SDL_Surface* screen, int x, int y) {
   // health monitor  
 }
 
+void Manager::drawScoreHUD() {
+	std::string scoreString;
+	std::stringstream convert;
+   convert << scoreThatYouHaveReceivedBasedOnTheNumberOfSpritesThatHaveExploded;
+   scoreString = convert.str();
+	
+	std::string scoreMessage = Gamedata::getInstance().getXmlStr("score/text") + " " + scoreString;
+   io.printMessageCenteredAt(scoreMessage, Gamedata::getInstance().getXmlInt("score/yLoc"));
+}
+
+void Manager::hitCrabMessage() {
+   io.printMessageCenteredAtBigger(Gamedata::getInstance().getXmlStr("hitCrab/text"), 
+										Gamedata::getInstance().getXmlInt("hitCrab/yLoc"));
+}
+
 void Manager::update() {
   clock.update();
   Uint32 ticks = clock.getTicksSinceLastFrame();
@@ -185,7 +200,7 @@ void Manager::reset() {
 	sprites[0]->stopMove();
 	isHoldingDownTheSpaceBarKey = 0;
 	scoreThatYouHaveReceivedBasedOnTheNumberOfSpritesThatHaveExploded = 0;
-	
+
 	// restore the crabz
    std::vector<Drawable*>::iterator pos = crabz.begin();
 	while ( pos != crabz.end() ) {
@@ -197,12 +212,10 @@ void Manager::reset() {
 			++pos;
 		}
 	}
-
-	// restore the Arduinos
+	// restore the birds
 	std::vector<Drawable*>::iterator sprite = depthMakers.begin() + ((2*depthMakers.size())/3);
 	while(sprite != depthMakers.end() ) {
 		if(dynamic_cast<ExplodingSprite*>(*sprite)) {
-			std::cout << "restoring an Arduino" << std::endl;
 			ExplodingSprite* temp = static_cast<ExplodingSprite*>(*sprite);
 			(*sprite) = new paintSprite((*sprite)->getName());
 			delete temp;
@@ -226,6 +239,8 @@ void Manager::play() {
   int startX = Gamedata::getInstance().getXmlInt("hudStartX");
   int startY = Gamedata::getInstance().getXmlInt("hudStartY");
 
+  int hitCrabTime = 50;
+
   Health bar;
   SDLSound sound;
 
@@ -235,7 +250,7 @@ void Manager::play() {
 	while ( not done ) {
 	Uint8 *keystate = SDL_GetKeyState(NULL);
 		while ( SDL_PollEvent(&event) ) {
-		std::cout<< event.key.keysym.sym << std::endl;
+		//std::cout<< event.key.keysym.sym << std::endl;
  			if (event.type ==  SDL_QUIT) { 
 				done = true; 
 				break;
@@ -255,7 +270,7 @@ void Manager::play() {
 						shot = true;
 						viewport.setObjectToTrack(sprites[sprites.size()-1]);
 						timeSinceMissile = 0;
-						sound[6];
+						sound[0];
 					}	
 					break;
 				default:
@@ -323,9 +338,10 @@ void Manager::play() {
 		if(counter < 300) {
 	 		drawHUD(screen, startX, startY);
 	 	} 
+		drawScoreHUD();
 		counter++;
         	bar.draw(); 
-		SDL_Flip(screen);
+		
 		update();
 		bar.update(clock.getTicksSinceLastFrame());
 		timeSinceMissile += clock.getTicksSinceLastFrame();
@@ -349,6 +365,8 @@ void Manager::play() {
     			++sprite;
   			}
 		}
+
+		hitCrabTime++;
 		if (shot == true) {
 			std::vector<Drawable*>::iterator sprite2 = crabz.begin();
 			while ( sprite2 != crabz.end() ) {
@@ -357,18 +375,23 @@ void Manager::play() {
 						MultiSprite* temp = static_cast<MultiSprite*>(*sprite2);
 						Sprite weGonnaBlowThisOneUp((*sprite2)->getName(),(*sprite2)->getPosition(),
 							(*sprite2)->getVelocity());
-						(*sprite2) = new ExplodingSprite(const_cast<Sprite&>(weGonnaBlowThisOneUp));
+						(*sprite2) = new ExplodingSprite(const_cast<Sprite&>(weGonnaBlowThisOneUp));					
+						hitCrabTime = 0;
 						delete temp;
 						shot = false;
 						viewport.setObjectToTrack(sprites[0]);
-						++scoreThatYouHaveReceivedBasedOnTheNumberOfSpritesThatHaveExploded;
+						scoreThatYouHaveReceivedBasedOnTheNumberOfSpritesThatHaveExploded+=5;
 						break;
 					}
 				}
     			++sprite2;
   			}
   		}
-			
+		if(hitCrabTime < 50) {
+			hitCrabMessage();
+		}
+
+		SDL_Flip(screen);
 
 		if (shot == true and sprites[sprites.size()-1]->Y() > viewport.getVH()) {
 			shot = false;

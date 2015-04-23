@@ -29,7 +29,15 @@ IOManager::IOManager( ) :
          gdata.getXmlStr("font/file").c_str(), 
          gdata.getXmlInt("font/size")
          );
-  if ( !font ) {
+  biggerFont = TTF_OpenFont(
+	     gdata.getXmlStr("font/file").c_str(),
+        gdata.getXmlInt("font/biggerSize")		
+		  );
+  biggestFont = TTF_OpenFont(
+	     gdata.getXmlStr("font/file").c_str(),
+        gdata.getXmlInt("font/biggestSize")		
+		  );
+  if ( !font || !biggerFont ) {
     throw string("TTF_OpenFont failed: ") + TTF_GetError();
   }
   color.r = gdata.getXmlInt("font/red");
@@ -75,7 +83,21 @@ void IOManager::printMessageAt(const string& msg, Sint16 x, Sint16 y) const {
 }
 
 void IOManager::printMessageCenteredAt( const string& msg, Sint16 y) const {
-   SDL_Surface *stext = TTF_RenderText_Blended(font, msg.c_str(), color);
+   SDL_Surface *stext = TTF_RenderText_Blended(biggerFont, msg.c_str(), color);
+   if (stext) {
+     Sint16 x = ( viewWidth - stext->w ) / 2;
+     SDL_Rect dest = {x,y,0,0};
+     SDL_BlitSurface( stext, NULL, screen, &dest );
+     SDL_FreeSurface(stext);
+   }
+   else {
+     throw 
+     string("Couldn't allocate text sureface in printMessageCenteredAt");
+   }
+}
+
+void IOManager::printMessageCenteredAtBigger( const string& msg, Sint16 y) const {
+   SDL_Surface *stext = TTF_RenderText_Blended(biggestFont, msg.c_str(), color);
    if (stext) {
      Sint16 x = ( viewWidth - stext->w ) / 2;
      SDL_Rect dest = {x,y,0,0};

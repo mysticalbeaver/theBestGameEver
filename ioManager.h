@@ -19,6 +19,7 @@ public:
 
   void printMessageAt(const string& msg, Sint16 x, Sint16 y) const;
   void printMessageCenteredAt(const string& msg, Sint16 y) const;
+  void printMessageCenteredAtBigger(const string& msg, Sint16 y) const;
   void printStringAfterMessage(const string&, Uint32 x, Uint32 y) const;
 
   template <typename T>
@@ -55,6 +56,8 @@ private:
   const unsigned MAX_STRING_SIZE;
   SDL_Surface * screen;
   TTF_Font *font;
+  TTF_Font *biggerFont;
+  TTF_Font *biggestFont;
   SDL_Color color;
   string inputString;
 };

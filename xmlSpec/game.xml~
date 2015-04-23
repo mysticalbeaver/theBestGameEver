@@ -1,0 +1,219 @@
+<?xml version = "1.0"?>
+<GameData>
+<!-- screenTitle is also used to identify you and your animation. 
+     So make sure to include your name as part of the screenTitle -->
+<screenTitle>Brandon + Anna's Mew Mashup</screenTitle>
+<maxStringSize>50</maxStringSize>
+<numberofarticunos>30</numberofarticunos>
+<startscale>1</startscale>
+<frameMax>400</frameMax>
+<username>bburkho</username>
+
+<view>
+  <width>500</width>
+  <height>588</height>
+</view>
+
+<world>
+  <width>3000</width>
+  <height>588</height>
+</world>
+<clock>
+  <fpsLoc x="10" y="10"/>
+  <secondsLoc x="10" y="30"/>
+</clock>
+
+<hudStartX>280</hudStartX>
+<hudStartY>60</hudStartY>
+<hudWidth>200</hudWidth>
+<hudHeight>160</hudHeight>
+
+<hudWelcomeMsg>
+	<text>Welcome!</text>
+	<xLoc>282</xLoc>
+	<yLoc>63</yLoc>
+</hudWelcomeMsg>
+
+<hudMoveCannonMsg>
+	<text>To move cannon:</text>
+	<xLoc>282</xLoc>
+	<yLoc>123</yLoc>
+</hudMoveCannonMsg>
+
+<hudMoveUpMsg>
+	<text>use W to move up</text>
+	<xLoc>295</xLoc>
+	<yLoc>143</yLoc>
+</hudMoveUpMsg>
+
+<hudMoveDownMsg>
+	<text>use S to move down</text>
+	<xLoc>295</xLoc>
+	<yLoc>163</yLoc>
+</hudMoveDownMsg>
+
+<hudPowerBarMsg>
+	<text>Press space bar to </text>
+	<text2>increase power</text2>
+	<xLoc>282</xLoc>
+	<yLoc>183</yLoc>
+	<xLoc2>282</xLoc2>
+	<yLoc2>203</yLoc2>
+</hudPowerBarMsg>
+
+<score>
+	<text>Score: </text>
+	<yLoc>40</yLoc>
+</score>
+
+<hitCrab>
+	<text>YEAH!</text>
+	<yLoc>100</yLoc>
+</hitCrab>
+
+<fpsLocX>282</fpsLocX>
+<fpsLocY>83</fpsLocY>
+
+<getSecondsLocX>282</getSecondsLocX>
+<getSecondsLocY>103</getSecondsLocY>
+
+<frameCap>60</frameCap>
+<!-- use 1 or 0 to toggle framerate cap -->
+<framesAreCapped>1</framesAreCapped>
+
+<middle>
+  <file>images/clouds.png</file>
+  <red>193</red>
+  <green>205</green>
+  <blue>205</blue>
+  <factor>2</factor>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>1038</width>
+  <height>588</height>
+  <transparency>false</transparency>
+</middle>
+
+<back>
+  <file>images/city.png</file>
+  <red>193</red>
+  <green>205</green>
+  <blue>205</blue>
+  <factor>3</factor>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>1181</width>
+  <height>588</height>
+  <transparency>false</transparency>
+</back>
+
+<front>
+  <file>images/industrial.png</file>
+  <red>193</red>
+  <green>205</green>
+  <blue>205</blue>
+  <factor>1</factor>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>688</width>
+  <height>588</height>
+  <transparency>true</transparency>
+</front>
+
+<font name="font">
+  <!--<file>font/dyslexic-bold.otf</file>-->
+  <file>font/UpheavalPro.otf</file>
+  <size>16</size>
+  <biggerSize>24</biggerSize>
+  <biggestSize>150</biggestSize>
+  <red>0</red>
+  <green>0</green>
+  <blue>0</blue>
+  <unused>0</unused>
+</font>
+
+<numberofcrabsthatareinthegame>10</numberofcrabsthatareinthegame>
+
+<crab>
+  <file>images/crab_smaller.png</file>
+  <startLoc x="20" y="450"/>
+
+  <frames>4</frames>
+  <frameInterval>100</frameInterval>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
+
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>155</width>
+  <height>117</height>
+  <speedX>-500</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</crab>
+
+<mewtwo>
+  <file>images/mewtwo.png</file>
+  <startLoc x="190" y="100"/>
+
+  <frames>2</frames>
+  <frameInterval>60</frameInterval>
+
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>105</width>
+  <height>124</height>
+  <speedX>-200</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</mewtwo>
+
+<cloudgun>
+  <file>images/nimbusgun.png</file>
+  <startLoc x="0" y="100"/>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>100</width>
+  <height>100</height>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</cloudgun>
+
+
+<Articuno>
+  <file>images/Articuno.png</file>
+  <startLoc x="190" y="100"/>
+
+  <frames>40</frames>
+  <frameInterval>20</frameInterval>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <barreloffsetx>90</barreloffsetx>
+  <barreloffsety>3</barreloffsety>
+  <width>172</width>
+  <height>171</height>
+  <speedX>5</speedX>
+  <speedY>400</speedY>
+  <transparency>true</transparency>
+</Articuno>
+
+<swirl>
+  <file>images/swirl.png</file>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>19</width>
+  <height>18</height>
+  <startLoc x="320" y="240"/>
+  <speedX>175</speedX>
+  <speedY>175</speedY>
+  <transparency>true</transparency>
+</swirl>
+
+</GameData>

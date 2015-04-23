@@ -17,6 +17,8 @@ public:
   void play();
   void switchSprite();
   void drawHUD(SDL_Surface* screen, int x, int y);
+  void drawScoreHUD();
+  void hitCrabMessage();
 
 private:
   const bool env;
