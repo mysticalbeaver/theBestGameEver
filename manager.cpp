@@ -60,8 +60,8 @@ Manager::Manager() :
 	}
   
 //make sure you put the paintsprites on last
-  for (unsigned int i = 0; i < n; ++i){
-  	depthMakers.push_back(new paintSprite("Articuno"));
+  for (unsigned int i = 0; i < n; ++i) {
+  		depthMakers.push_back(new paintSprite("Articuno"));
   	}	
   
   viewport.setObjectToTrack(sprites[0]);
@@ -203,9 +203,6 @@ void Manager::play() {
           				done = true;
           				break;
         			}
-        			if ( keystate[SDLK_t] ) {
-          				switchSprite();
-        			}
         			if ( keystate[SDLK_p] ) {
           				if ( clock.isPaused() )
 						clock.unpause(); 
@@ -267,13 +264,14 @@ void Manager::play() {
 		timeSinceMissile += clock.getTicksSinceLastFrame();
 
 		if (shot == true) {
-			std::vector<paintSprite*>::iterator sprite = depthMakers.begin() + ((2*depthMakers.size())/3);
-			std::vector<MultiSprite*>::iterator sprite2 = crabz.begin() + 1;
+			std::vector<Drawable*>::iterator sprite = depthMakers.begin() + ((2*depthMakers.size())/3);
 			while ( sprite != depthMakers.end() ) {
 				if (not dynamic_cast<ExplodingSprite*>(*sprite)) {
 					if ( static_cast<MissileSprite*>(sprites[sprites.size()-1])->collidedWith(*sprite) ) {
-						paintSprite* temp = (*sprite);
-						(*sprite) = new ExplodingSprite(const_cast<paintSprite&>(**sprite));
+						paintSprite* temp = static_cast<paintSprite*>(*sprite);
+						Sprite weGonnaBlowThisOneUp((*sprite)->getName(),(*sprite)->getPosition(),
+							(*sprite)->getVelocity());
+						(*sprite) = new ExplodingSprite(const_cast<Sprite&>(weGonnaBlowThisOneUp));
 						delete temp;
 						shot = false;
 						viewport.setObjectToTrack(sprites[0]);
@@ -283,7 +281,27 @@ void Manager::play() {
 				}
     			++sprite;
   			}
+		}
+		if (shot == true) {
+			std::vector<Drawable*>::iterator sprite2 = crabz.begin();
+			while ( sprite2 != crabz.end() ) {
+				if (not dynamic_cast<ExplodingSprite*>(*sprite2)) {
+					if ( static_cast<MissileSprite*>(sprites[sprites.size()-1])->collidedWith(*sprite2) ) {
+						MultiSprite* temp = static_cast<MultiSprite*>(*sprite2);
+						Sprite weGonnaBlowThisOneUp((*sprite2)->getName(),(*sprite2)->getPosition(),
+							(*sprite2)->getVelocity());
+						(*sprite2) = new ExplodingSprite(const_cast<Sprite&>(weGonnaBlowThisOneUp));
+						delete temp;
+						shot = false;
+						viewport.setObjectToTrack(sprites[0]);
+						++scoreThatYouHaveReceivedBasedOnTheNumberOfSpritesThatHaveExploded;
+						break;
+					}
+				}
+    			++sprite2;
+  			}
   		}
+			
 
 		if (shot == true and sprites[sprites.size()-1]->Y() > viewport.getVH()) {
 			shot = false;

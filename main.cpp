@@ -1,6 +1,6 @@
 // Brian Malloy        Game Construction
 #include "manager.h"
-#include <SDL_mixer.h>
+//#include <SDL_mixer.h>
 
 int main(int, char*[]) {
    try {

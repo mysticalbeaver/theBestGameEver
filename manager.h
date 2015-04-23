@@ -30,8 +30,8 @@ private:
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;
-  std::vector<MultiSprite*> crabz;
-  std::vector<paintSprite*> depthMakers;
+  std::vector<Drawable*> crabz;
+  std::vector<Drawable*> depthMakers;
   int currentSprite;
 
   bool makeVideo;

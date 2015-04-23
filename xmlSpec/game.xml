@@ -7,7 +7,6 @@
 <numberofswirls>60</numberofswirls>
 <numberofarticunos>30</numberofarticunos>
 <startscale>1</startscale>
-
 <frameMax>400</frameMax>
 <username>bburkho</username>
 
@@ -130,6 +129,10 @@
 
   <frames>4</frames>
   <frameInterval>100</frameInterval>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 
   <srcX>0</srcX>
   <srcY>0</srcY>

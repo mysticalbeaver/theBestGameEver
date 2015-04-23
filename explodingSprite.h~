@@ -1,9 +1,11 @@
+#ifndef CHUNK__H
+#define CHUNK__H
 #include <vector>
 #include <list>
 #include "chunk.h"
-#include "paintSprite.h"
+#include "Sprite.h"
 
-class ExplodingSprite : public paintSprite {
+class ExplodingSprite : public Sprite {
 public:
   ExplodingSprite(const paintSprite& s);
   ~ExplodingSprite();
@@ -19,3 +21,4 @@ private:
   ExplodingSprite(const ExplodingSprite&); // Explicit disallow (Item 6)
   ExplodingSprite& operator=(const ExplodingSprite&); // (Item 6)
 };
+#endif

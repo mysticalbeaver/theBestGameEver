@@ -7,6 +7,7 @@
 #include "viewport.h"
 #include <cmath>  // for sqrtf
 #include "paintSprite.h"
+#include "multisprite.h"
 
 class Manager {
 public:
@@ -30,7 +31,7 @@ private:
 
   std::vector<Drawable*> sprites;
   std::vector<MultiSprite*> crabz;
-  std::vector<paintSprite*> depthMakers;
+  std::vector<Drawable*> depthMakers;
   int currentSprite;
 
   bool makeVideo;

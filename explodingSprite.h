@@ -3,11 +3,11 @@
 #include <vector>
 #include <list>
 #include "chunk.h"
-#include "paintSprite.h"
+#include "sprite.h"
 
-class ExplodingSprite : public paintSprite {
+class ExplodingSprite : public Sprite {
 public:
-  ExplodingSprite(const paintSprite& s);
+  ExplodingSprite(const Sprite& s);
   ~ExplodingSprite();
   virtual void draw() const;
   virtual void update(Uint32 ticks);

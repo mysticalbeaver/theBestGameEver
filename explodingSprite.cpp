@@ -2,8 +2,8 @@
 #include <cmath>
 #include "explodingSprite.h"
 
-ExplodingSprite::ExplodingSprite(const paintSprite& s) :
-  paintSprite(s), 
+ExplodingSprite::ExplodingSprite(const Sprite& s) :
+  Sprite(s), 
   chunks(), 
   freeList(),
   frames() {

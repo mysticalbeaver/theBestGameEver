@@ -1,5 +1,3 @@
-#ifndef CHUNK__H
-#define CHUNK__H
 #include <iostream>
 #include <cmath>
 #include "explodingSprite.h"
@@ -80,5 +78,5 @@ void ExplodingSprite::makeChunks(unsigned int n) {
     source_y += chunk_height;
   }
 }
-#endif
+
 

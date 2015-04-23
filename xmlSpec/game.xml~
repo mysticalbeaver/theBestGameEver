@@ -7,7 +7,6 @@
 <numberofswirls>60</numberofswirls>
 <numberofarticunos>30</numberofarticunos>
 <startscale>1</startscale>
-
 <frameMax>400</frameMax>
 <username>bburkho</username>
 
@@ -121,6 +120,8 @@
   <blue>0</blue>
   <unused>0</unused>
 </font>
+
+<numberofcrabsthatareinthegame>10</numberofcrabsthatareinthegame>
 
 <crab>
   <file>images/crab_smaller.png</file>
