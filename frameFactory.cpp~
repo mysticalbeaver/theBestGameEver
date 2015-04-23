@@ -137,15 +137,15 @@ std::vector<Frame*> FrameFactory::getPaintFrames(const std::string& name) {
 //we need to look at the next size of painted articunos 
  if (paintSpritesDrawn == 1) {
     paintSprites = gdata.getXmlInt("numberofarticunos");
-    scale = 0.2;
+    scale = 0.25;
     newname = name;
   }
   else if (paintSpritesDrawn == (paintSprites/3)+1) {
-    scale = 0.4;
+    scale = 0.5;
     newname = name + '2';
   }
   else if (paintSpritesDrawn == ((2*paintSprites)/3)+1) {
-    scale = 0.6;
+    scale = 0.75;
     newname = name + '3';
   }
   else if (paintSpritesDrawn < (paintSprites/3)+1) {

@@ -4,7 +4,6 @@
      So make sure to include your name as part of the screenTitle -->
 <screenTitle>Brandon + Anna's Mew Mashup</screenTitle>
 <maxStringSize>50</maxStringSize>
-<numberofswirls>60</numberofswirls>
 <numberofarticunos>30</numberofarticunos>
 <startscale>1</startscale>
 <frameMax>400</frameMax>
@@ -184,6 +183,8 @@
   </chunk>
   <srcX>0</srcX>
   <srcY>0</srcY>
+  <barreloffsetx>90</barreloffsetx>
+  <barreloffsety>3</barreloffsety>
   <width>172</width>
   <height>171</height>
   <speedX>5</speedX>

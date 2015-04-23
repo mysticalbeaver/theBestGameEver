@@ -47,13 +47,13 @@ void PlayerSprite::update(Uint32 ticks) {
   setPosition(getPosition() + incr);
 
   if (!moving)
-    velocityY(0.1*velocityY());
+    velocityY(0.98*velocityY());
    	
   if ( Y() < 0) {
-    Y(Y()+5);
+    velocityY( 0 );
   }
   if ( Y() > worldHeight-frameHeight) {
-    Y(Y()-5);
+    velocityY( 0 );
   }
     velocityX( 0 ); 
 }

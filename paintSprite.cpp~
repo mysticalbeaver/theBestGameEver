@@ -1,8 +1,10 @@
-#include "multisprite.h"
+#include "paintSprite.h"
 #include "gamedata.h"
 #include "frameFactory.h"
+#include "frame.h"
+#include "SDL/SDL_rotozoom.h"
 
-void MultiSprite::advanceFrame(Uint32 ticks) {
+void paintSprite::advanceFrame(Uint32 ticks) {
 	timeSinceLastFrame += ticks;
 	if (timeSinceLastFrame > frameInterval) {
     currentFrame = (currentFrame+1) % numberOfFrames;
@@ -10,16 +12,16 @@ void MultiSprite::advanceFrame(Uint32 ticks) {
 	}
 }
 
-MultiSprite::MultiSprite( const std::string& name) :
+paintSprite::paintSprite( const std::string& name) :
   Drawable(name, 
-           Vector2f(Gamedata::getInstance().getRandInRange(0,500*Gamedata::getInstance().getXmlInt(name+"/startLoc/x")), 
+           Vector2f(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"), 
                     Gamedata::getInstance().getXmlInt(name+"/startLoc/y")), 
-           Vector2f(Gamedata::getInstance().getXmlInt(name+"/speedX"), 
-                    Gamedata::getInstance().getXmlInt(name+"/speedY"))
+           Vector2f(0,0)
            ),
-  frames( FrameFactory::getInstance().getFrames(name) ),
+  frames( FrameFactory::getInstance().getPaintFrames(name) ),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
+  scale(Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt("startscale"))),
 
   currentFrame(0),
   numberOfFrames( Gamedata::getInstance().getXmlInt(name+"/frames") ),
@@ -27,13 +29,17 @@ MultiSprite::MultiSprite( const std::string& name) :
   timeSinceLastFrame( 0 ),
   frameWidth(frames[0]->getWidth()),
   frameHeight(frames[0]->getHeight())
-{ }
+{ 
+//change this in future version. Generating a random and then scaling it makes no sense
+setVelocity(Vector2f(scale*Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt(name+"/speedX")),scale*Gamedata::getInstance().getRandInRange(0,Gamedata::getInstance().getXmlInt(name+"/speedY"))));
+}
 
-MultiSprite::MultiSprite(const MultiSprite& s) :
+paintSprite::paintSprite(const paintSprite& s) :
   Drawable(s), 
   frames(s.frames),
   worldWidth( s.worldWidth ),
   worldHeight( s.worldHeight ),
+  scale( s.scale ),
   currentFrame(s.currentFrame),
   numberOfFrames( s.numberOfFrames ),
   frameInterval( s.frameInterval ),
@@ -42,13 +48,13 @@ MultiSprite::MultiSprite(const MultiSprite& s) :
   frameHeight( s.frameHeight )
   { }
 
-void MultiSprite::draw() const { 
+void paintSprite::draw() const { 
   Uint32 x = static_cast<Uint32>(X());
   Uint32 y = static_cast<Uint32>(Y());
   frames[currentFrame]->draw(x, y);
 }
 
-void MultiSprite::update(Uint32 ticks) { 
+void paintSprite::update(Uint32 ticks) { 
   advanceFrame(ticks);
 
   Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
@@ -65,7 +71,7 @@ void MultiSprite::update(Uint32 ticks) {
     velocityX( abs( velocityX() ) );
   }
   if ( X() > worldWidth-frameWidth) {
-    velocityX( -abs( velocityX() ) );
+    velocityX( -abs( velocityX() ));
   }  
 
 }

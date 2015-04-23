@@ -34,7 +34,7 @@ MissileSprite::MissileSprite( const std::string& name, float startx, float start
 { strategies.push_back( new MidPointCollisionStrategy );
   strategies.push_back( new RectangularCollisionStrategy );
   strategies.push_back( new PerPixelCollisionStrategy );
-  strategy = strategies[2];
+  strategy = strategies[0];
 }
 
 void MissileSprite::draw() const { 

@@ -25,6 +25,11 @@ public:
 
   float distance(float x1, float y1, float x2, float y2) const;
 
+private:
+  MissileSprite(const MissileSprite&);
+  std::vector<CollisionStrategy*> strategies;
+  CollisionStrategy * strategy;
+
 protected:
   const std::vector<Frame *> frames;
   int worldWidth;
@@ -39,10 +44,5 @@ protected:
   int time;
 
   void advanceFrame(Uint32 ticks);
-
-private:
-  MissileSprite(const MissileSprite&);
-  std::vector<CollisionStrategy*> strategies;
-  CollisionStrategy * strategy;
 };
 #endif
