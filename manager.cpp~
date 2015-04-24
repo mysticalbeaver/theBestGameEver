@@ -279,8 +279,7 @@ void Manager::play() {
                     			if(isHoldingDownTheSpaceBarKey) {
 						bar.powerUp();
 						isHoldingDownTheSpaceBarKey = 0;
-						//sprites.push_back(new MissileSprite("Articuno",sprites[0]->X(),sprites[0]->Y(),bar.getLen()));
-						sprites.push_back(new MissileSprite("bomb",sprites[0]->X(),sprites[0]->Y(),bar.getLen()));
+						sprites.push_back(new MissileSprite("Articuno",sprites[0]->X(),sprites[0]->Y(),bar.getLen()));
 						bar.reset();
 						shot = true;
 						viewport.setObjectToTrack(sprites[sprites.size()-1]);

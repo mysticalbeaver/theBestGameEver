@@ -139,7 +139,7 @@
 
 <numberofcrabsthatareinthegame>10</numberofcrabsthatareinthegame>
 
-<crab>
+<!--<crab>
   <file>images/crab_smaller.png</file>
   <startLoc x="20" y="450"/>
 
@@ -157,7 +157,28 @@
   <speedX>-500</speedX>
   <speedY>0</speedY>
   <transparency>true</transparency>
+</crab> -->
+
+<crab>
+  <file>images/crab.png</file>
+  <startLoc x="20" y="500"/>
+
+  <frames>4</frames>
+  <frameInterval>100</frameInterval>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
+
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>50</width>
+  <height>49</height>
+  <speedX>-500</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
 </crab>
+
 
 <mewtwo>
   <file>images/mewtwo.png</file>
@@ -208,6 +229,27 @@
   <speedY>400</speedY>
   <transparency>true</transparency>
 </Articuno>
+
+<bomb>
+  <file>images/bomb.png</file>
+  <startLoc x="190" y="100"/>
+
+  <frames>2</frames>
+  <frameInterval>20</frameInterval>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <barreloffsetx>90</barreloffsetx>
+  <barreloffsety>3</barreloffsety>
+  <width>30</width>
+  <height>38</height>
+  <speedX>5</speedX>
+  <speedY>400</speedY>
+  <transparency>true</transparency>
+</bomb>
 
 <swirl>
   <file>images/swirl.png</file>
