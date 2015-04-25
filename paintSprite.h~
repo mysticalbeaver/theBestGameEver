@@ -8,6 +8,7 @@ class paintSprite : public Drawable {
 public:
   paintSprite(const std::string&);
   paintSprite(const paintSprite&);
+  double getScale() { return scale; }
   virtual ~paintSprite() {}
 
   virtual void draw() const;

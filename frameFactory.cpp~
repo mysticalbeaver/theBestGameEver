@@ -138,6 +138,7 @@ std::vector<Frame*> FrameFactory::getPaintFrames(const std::string& name) {
  if (paintSpritesDrawn == 1) {
     paintSprites = gdata.getXmlInt("numberofarticunos");
     scale = gdata.getXmlFloat(name+"/scale1");
+std::cout<< scale<<std::endl;
     newname = name;
   }
   else if (paintSpritesDrawn == (paintSprites/3)+1) {

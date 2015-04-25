@@ -6,7 +6,7 @@
 class ExplodingSprite : public Sprite {
 public:
   ExplodingSprite(const Sprite& s);
-  ~ExplodingSprite(){};
+  ~ExplodingSprite();
   void draw() const {
     strategy->draw();
   }

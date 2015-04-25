@@ -2,10 +2,9 @@
 <GameData>
 <!-- screenTitle is also used to identify you and your animation. 
      So make sure to include your name as part of the screenTitle -->
-<screenTitle>Brandon + Anna's Mew Mashup</screenTitle>
+<screenTitle>Brandon + Anna's Missile Mashup</screenTitle>
 <maxStringSize>50</maxStringSize>
-<numberofarticunos>30</numberofarticunos>
-<startscale>1</startscale>
+<numberofarticunos>99</numberofarticunos>
 <frameMax>400</frameMax>
 <username>bburkho</username>
 
@@ -139,26 +138,6 @@
 
 <numberofcrabsthatareinthegame>10</numberofcrabsthatareinthegame>
 
-<!--<crab>
-  <file>images/crab_smaller.png</file>
-  <startLoc x="20" y="450"/>
-
-  <frames>4</frames>
-  <frameInterval>100</frameInterval>
-  <chunk>
-    <size>9</size>
-    <distance>200</distance>
-  </chunk>
-
-  <srcX>0</srcX>
-  <srcY>0</srcY>
-  <width>155</width>
-  <height>117</height>
-  <speedX>-500</speedX>
-  <speedY>0</speedY>
-  <transparency>true</transparency>
-</crab> -->
-
 <crab>
   <file>images/crab.png</file>
   <startLoc x="20" y="500"/>
@@ -179,22 +158,25 @@
   <transparency>true</transparency>
 </crab>
 
+<explo>
+  <file>images/explo.png</file>
+  <startLoc x="20" y="500"/>
 
-<mewtwo>
-  <file>images/mewtwo.png</file>
-  <startLoc x="190" y="100"/>
-
-  <frames>2</frames>
-  <frameInterval>60</frameInterval>
+  <frames>15</frames>
+  <frameInterval>100</frameInterval>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 
   <srcX>0</srcX>
   <srcY>0</srcY>
-  <width>105</width>
-  <height>124</height>
-  <speedX>-200</speedX>
+  <width>256</width>
+  <height>256</height>
+  <speedX>-500</speedX>
   <speedY>0</speedY>
   <transparency>true</transparency>
-</mewtwo>
+</explo>
 
 <cloudgun>
   <file>images/nimbusgun.png</file>
@@ -225,25 +207,33 @@
   <barreloffsety>3</barreloffsety>
   <width>172</width>
   <height>171</height>
-  <speedX>5</speedX>
+  <speedX>400</speedX>
   <speedY>400</speedY>
   <transparency>true</transparency>
+  <scale1>0.2</scale1>
+  <scale2>0.4</scale2>
+  <scale3>0.6</scale3>
 </Articuno>
 
 <bomb>
+  <file>images/bomb.png</file>
+  <startLoc x="190" y="100"/>
 
-</bomb>
-
-<swirl>
-  <file>images/swirl.png</file>
+  <frames>2</frames>
+  <frameInterval>20</frameInterval>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
   <srcX>0</srcX>
   <srcY>0</srcY>
-  <width>19</width>
-  <height>18</height>
-  <startLoc x="320" y="240"/>
-  <speedX>175</speedX>
-  <speedY>175</speedY>
+  <barreloffsetx>90</barreloffsetx>
+  <barreloffsety>3</barreloffsety>
+  <width>30</width>
+  <height>38</height>
+  <speedX>5</speedX>
+  <speedY>400</speedY>
   <transparency>true</transparency>
-</swirl>
+</bomb>
 
 </GameData>
